@@ -1,0 +1,102 @@
+!!!
+%html
+    %head
+        %meta{:charset => "utf-8"}/
+        %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+        %title
+            Dashboard
+        %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
+    %body
+        #wrapper
+            %nav
+                .left
+                    %p
+                        CLUB RALLY
+                .right
+                    %a{:href => "/logout"}
+                        LOGOUT
+                    .contain
+                        %form{:action => "/dashboard/search", :method => "get"}
+                            %span.fa.fa-fw.fa-search
+                            %input{:type => "text", :name => "search"}
+            #body
+                #sidebar
+                    .opt
+                        %a{:href => "/dashboard/home"}
+                        .left
+                            %i.fa.fa-users.fa-fw
+                            .color
+                        .right
+                            MY CLUBS
+                    .opt.active
+                        %a{:href => "/dashboard/browse"}
+                        .left
+                            %i.fa.fa-folder-open.fa-fw
+                            .color
+                        .right
+                            BROWSE CLUBS
+                    .opt
+                        %a{:href => "/dashboard/notifications"}
+                        .left
+                            %i.fa.fa-newspaper-o.fa-fw
+                            .color
+                        .right
+                            FEED
+                #content
+                    #color-strip
+                    %header
+                        %h1
+                            =params[:club]
+                    #info.club
+                        %h1
+                            Meeting Time:
+                        %p
+                            =@club.meetingtime
+                        %br
+                        %h1
+                            Meeting Location:
+                        %p
+                            =@club.location
+                        %br
+                        %h1
+                            Head:
+                        %p
+                            -@club.head.each do |head|
+                                %a{:href => "mailto:#{head}"}
+                                    =head
+                        %br
+                        %h1
+                            Members
+                            ="(#{@club.members.length})"
+                        %p.member
+                            -if @club.members.length == 0
+                                No members so far
+                            -else
+                                -@club.members.each do |member|
+                                    %a{:href => "mailto:#{member}"}
+                                        =member
+                                    %br
+                        -if @club.head.include? @user
+                            %a.btn{:href => @list}
+                                MAIL CLUB
+                            %a.btn.green{:href => "/edit/#{@club.name}"}
+                                EDIT CLUB
+                            %a.btn.red{:href => "/delete/#{@club.name}"}
+                                DELETE CLUB
+                        -elsif @club.members.include? @user
+                            %a.btn.red{:href => "/leave/#{@club.name}"}
+                                LEAVE CLUB
+                        -else
+                            %a.btn{:href => "/join/#{@club.name}"}
+                                JOIN CLUB
+                    %footer
+                        .left
+                            Made with
+                            %i.fa.fa-heart
+                            in Andover
+                        .right
+                            %a{:href => "mailto:jshen@andover.edu"}
+                                CONTACT

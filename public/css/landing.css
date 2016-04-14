@@ -1,0 +1,180 @@
+@font-face{
+    font-family: montserrat;
+    src: url(/fonts/montserrat/Montserrat-Regular.otf);
+}
+
+@font-face{
+    font-family: sourcesanspro;
+    src: url(/fonts/source-sans-pro/SourceSansPro-Regular.otf);
+}
+
+@font-face{
+    font-family: panton;
+    src: url(/fonts/panton/Panton-LightCaps.otf);
+}
+
+html,
+body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
+.right{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: right;
+}
+
+.btn{
+    padding: 0.5em 1em 0.5em 1em;
+    border: 1px solid #fff;
+    text-decoration: none;
+    color: #fff;
+}
+
+.fa-heart{
+    color: #c0392b;
+}
+
+#wrapper {
+    min-height:100%;
+    position:relative;
+    overflow-x: hidden;
+}
+
+.center{
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: relative;
+    text-align: center;
+}
+
+nav{
+    position: absolute;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100vw;
+    height: 4.5em;
+    color: #fff;
+    font-family: montserrat;
+}
+
+nav .left{
+    padding-left: 5em;
+}
+
+nav .right{
+    padding-right: 5em;
+}
+
+nav p{
+    line-height: 4.5em;
+    margin-top: 0;
+}
+
+nav p span{
+    color: #59ABE3;
+}
+
+nav a{
+    color: #b9b9b9;
+    text-decoration: none;
+    line-height: 4.5em;
+    margin-right: 1em;
+}
+
+header{
+    height: 80vh;
+    width: 100vw;
+    background-image: url(/graphics/cover.jpeg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1px;
+}
+
+header .center{
+    font-family: montserrat;
+    color: #fff;
+}
+
+header h1{
+    margin-bottom: 0;
+}
+
+header p{
+    margin-top: 0;
+    margin-bottom: 1.5em;
+    color: #b9b9b9;
+}
+
+header .btn{
+    border: none;
+    background-color: #59ABE3;
+    padding: 0.75em 1.5em 0.75em 1.5em;
+}
+
+#body{
+    padding-bottom: 3em;
+}
+
+.bodybox{
+    width: 100vw;
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.bodybox h1{
+    font-family: montserrat;
+    font-size: 1.2em;
+    margin-bottom: -0.1em;
+    color: #464646;
+}
+
+.bodybox hr{
+    width: 1em;
+    border-top: 3px solid #464646;
+}
+
+.bodybox p{
+    font-family: sourcesanspro;
+    color: #6c6c6c;
+    margin-top: 0.5em;
+    width: 40%;
+    margin: 0 auto;
+}
+
+footer{
+    width: 100vw;
+    font-family: montserrat;
+    color: #464646;
+    height: 3em;
+    position: absolute;
+    bottom: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+footer a{
+    color: #6c6c6c;
+    text-decoration: none;
+}
+
+footer .left p{
+    padding-left: 5em;
+    margin: 0;
+}
+
+footer .right a{
+    padding-right: 5em;
+    margin-bottom: 0;
+}

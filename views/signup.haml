@@ -1,0 +1,39 @@
+!!!
+%html
+    %head
+        %meta{:charset => "utf-8"}/
+        %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+        %title
+            Register
+        %link{:href => "/css/login.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
+    %body
+        #wrapper
+            #background
+            #vertical-box
+                %a{:href => "/"}
+                    %i.fa.fa-times.fa-fw.fa-2x
+                %h1
+                    SIGN-UP
+                %form{:action => "/secureregister", :method => "post"}
+                    %input.text{:type => "text", :name => "email", :placeholder => "Email"}
+                    %br
+                    %input.text{:type => "password", :name => "password", :placeholder => "Password"}
+                    -if $register_error != nil
+                        %br
+                        .error
+                            %p
+                                =$register_error
+                    -if $register_error == nil
+                        %br
+                    .terms 
+                        By signing up, you agree to the 
+                        %a{:href => "/docs/terms"}
+                            terms
+                    %input.btn{:type => "submit", :value => "REGISTER"}
+                .createaccount
+                    Already have an account?
+                    %a{:href => "/login"}
+                        Login!

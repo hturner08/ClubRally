@@ -1,0 +1,168 @@
+@font-face{
+    font-family: montserrat;
+    src: url(/fonts/montserrat/Montserrat-Regular.otf);
+}
+
+@font-face{
+    font-family: sourcesanspro;
+    src: url(/fonts/source-sans-pro/SourceSansPro-Regular.otf);
+}
+
+@font-face{
+    font-family: panton;
+    src: url(/fonts/panton/Panton-LightCaps.otf);
+}
+
+body, html{
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper{
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#background{
+    background-image: url("/graphics/cover.jpeg");
+    background-size: cover;
+    background-position: center center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#vertical-box{
+    width: 30em;
+    border: 1px solid #788086;
+    border-radius: 5px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background-color: #F2F2F2;
+    padding: 3em;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#vertical-box .fa-times{
+    color: #9F9F9F;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+}
+
+#vertical-box h1{
+    font-family: montserrat;
+    color: #464646;
+}
+
+#vertical-box .text{
+    width: 80%;
+    height: 2.7em;
+    border: 1px solid #F2F2F2;
+    padding-left: 1em;
+    box-sizing: border-box;
+    font-family: sourcesanspro;
+    font-size: 1em;
+    color: #A9A9A9;
+}
+
+#vertical-box .forgot{
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+    height: 2.7em;
+    font-family: sourcesanspro;
+}
+
+#vertical-box .forgot span{
+    line-height: 2.7em;
+    color: #6F7071;
+}
+
+#rememberme{
+    width: 25px;
+    height: 25px;
+    border: 1px solid #6F7071;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0.5em;
+    margin-left: 0.4em;
+}
+
+#vertical-box .forgot a{
+    margin-right: 0.2em;
+    display: block;
+    float: right;
+}
+
+#vertical-box .btn{
+    width: 80%;
+    background-color: #6EBAEE;
+    color: #FFFEFD;
+    border: none;
+    border-radius: 5px;
+    font-family: sourcesanspro;
+    height: 2.7em;
+    font-size: 1.1em;
+    margin: 0;
+    cursor: pointer;
+}
+
+.createaccount{
+    font-family: sourcesanspro;
+    color: #6F7071;
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+    height: 2.7em;
+}
+
+a{
+    color: #6EBAEE;
+    text-decoration: none;
+    font-family: sourcesanspro;
+    line-height: 2.7em;
+}
+
+a:hover{
+    color: #63a6d3;
+}
+
+*:focus {
+    outline: 0;
+}
+
+.error{
+    background-color: #E06B6C;
+    width: calc(80% - 1px);
+    margin: 0 auto;
+    height: 2.7em;
+    color: #f2f2f2;
+}
+
+.error p{
+    font-family: sourcesanspro;
+    line-height: 2.7em;
+}
+
+.terms{
+    text-align: center;
+    width: 80%;
+    color: #6F7071;
+    margin: 0 auto;
+    height: 2.7em;
+    font-family: sourcesanspro;
+}
+
+p{
+    font-family: sourcesanspro;
+}

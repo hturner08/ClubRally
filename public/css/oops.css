@@ -1,0 +1,38 @@
+@font-face{
+    font-family: montserrat;
+    src: url(/fonts/montserrat/Montserrat-Regular.otf);
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.center{
+    text-align: center;
+    top: 45%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: relative;
+    font-family: montserrat;
+}
+
+h1{
+    margin-bottom: 0;
+    color: #464646;
+    font-size: 5em;
+}
+
+a{
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #67809F;
+    text-decoration: none;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+a:hover{
+    color: #4c5f76;
+}

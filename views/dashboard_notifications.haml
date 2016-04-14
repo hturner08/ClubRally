@@ -1,0 +1,75 @@
+!!!
+%html
+    %head
+        %meta{:charset => "utf-8"}/
+        %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+        %title
+            Dashboard
+        %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
+    %body
+        #wrapper
+            %nav
+                .left
+                    %p
+                        CLUB RALLY
+                .right
+                    %a{:href => "/logout"}
+                        LOGOUT
+                    .contain
+                        %form{:action => "/dashboard/search", :method => "get"}
+                            %span.fa.fa-fw.fa-search
+                            %input{:type => "text", :name => "search", :value => params[:search]}
+            #body
+                #sidebar
+                    .opt
+                        %a{:href => "/dashboard/home"}
+                        .left
+                            %i.fa.fa-users.fa-fw
+                            .color
+                        .right
+                            MY CLUBS
+                    .opt
+                        %a{:href => "/dashboard/browse"}
+                        .left
+                            %i.fa.fa-folder-open.fa-fw
+                            .color
+                        .right
+                            BROWSE CLUBS
+                    .opt.active
+                        %a{:href => "/dashboard/notifications"}
+                        .left
+                            %i.fa.fa-newspaper-o.fa-fw
+                            .color
+                        .right
+                            FEED
+                #content
+                    #color-strip
+                    %header
+                        %h1
+                            %i.fa.fa-fw.fa-newspaper-o
+                            FEED
+                    #info.feed
+                        %h1
+                            Upcoming:
+                        %br
+                        -@upcoming.each do |club|
+                            .notification-box
+                                .img{:style => "background-image: url(#{club.img})"}
+                                .text
+                                    %h1
+                                        =club.name
+                                    %p.subtitle
+                                        =club.location
+                                    %p  
+                                        =club.meetingtime
+                    %footer
+                        .left
+                            Made with
+                            %i.fa.fa-heart
+                            in Andover
+                        .right
+                            %a{:href => "mailto:jshen@andover.edu"}
+                                CONTACT

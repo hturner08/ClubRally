@@ -1,0 +1,89 @@
+!!!
+%html
+    %head
+        %meta{:charset => "utf-8"}/
+        %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+        %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+        %title
+            Dashboard
+        %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
+    %body
+        #wrapper
+            %nav
+                .left
+                    %p
+                        CLUB RALLY
+                .right
+                    %a{:href => "/logout"}
+                        LOGOUT
+                    .contain
+                        %form{:action => "/dashboard/search", :method => "get"}
+                            %span.fa.fa-fw.fa-search
+                            %input{:type => "text", :name => "search"}
+            #body
+                #sidebar
+                    .opt.active
+                        %a{:href => "/dashboard/home"}
+                        .left
+                            %i.fa.fa-users.fa-fw
+                            .color
+                        .right
+                            MY CLUBS
+                    .opt
+                        %a{:href => "/dashboard/browse"}
+                        .left
+                            %i.fa.fa-folder-open.fa-fw
+                            .color
+                        .right
+                            BROWSE CLUBS
+                    .opt
+                        %a{:href => "/dashboard/notifications"}
+                        .left
+                            %i.fa.fa-newspaper-o.fa-fw
+                            .color
+                        .right
+                            FEED
+                #content
+                    #color-strip
+                    %header
+                        %h1
+                            %i.fa.fa-fw.fa-pencil
+                            EDIT 
+                            =@club.name
+                    #info
+                        %form#createclub{:action => "/editclub", :method => "post"}
+                            %input.text{:type => "text", :name => "name", :value => @club.name, :hidden => ""}
+                            %input.text{:type => "text", :name => "description", :value => @club.description}
+                            %br
+                            %input.text{:type => "text", :name => "img", :value => @club.img}
+                            %br
+                            %select{:name => "weekday"}
+                                %option{:value => "Sunday"}
+                                    Sunday
+                                %option{:value => "Monday"}
+                                    Monday
+                                %option{:value => "Tuesday"}
+                                    Tuesday
+                                %option{:value => "Wednesday"}
+                                    Wednesday
+                                %option{:value => "Thursday"}
+                                    Thursday
+                                %option{:value => "Friday"}
+                                    Friday
+                                %option{:value => "Saturday"}
+                                    Saturday
+                            %input.text-small{:type => "text", :name => "time", :value => "12:00pm"}
+                            %br
+                            %input.text{:type => "text", :name => "location", :value => @club.location}
+                            %br
+                            %input.btn{:type => "submit", :value => "EDIT"}
+                    %footer
+                        .left
+                            Made with
+                            %i.fa.fa-heart
+                            in Andover
+                        .right
+                            %a{:href => "mailto:jshen@andover.edu"}
+                                CONTACT

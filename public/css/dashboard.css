@@ -324,42 +324,47 @@ span.fa-search{
     font-family: sourcesanspro;
 }
 
-.notification-box{
-    width: 50%;
-    height: 7em;
-    border: 1px solid #b9b9b9;
+.notification{
+    width: 55%;
+    position: relative;
+    height: 5.5em;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    padding-left: 1em;
 }
 
-.notification-box .img{
-    width: 6em;
-    height: 6em;
-    margin-top: 0.5em;
+.notification .fa-times{
+    color: #6c6c6c;
+    font-size: 1.5em;
+    padding-right: 0.7em;
+    line-height: 3.6666666666em;
+}
+
+.notification-box{
+    width: 90%;
+    height: 100%;
+    border: 1px solid #b9b9b9;
+}
+
+.notification-box .fa{
+    margin-left: 0.75em;
+    margin-top: 0.85em;
+    padding: 0.5em 0.4em 0.5em 0.4em;
+    font-size: 1.5em;
     border-radius: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+    color: #fff;
+    background-color: #84C7FD;
+    float: left;
+    margin-right: 0.75em;
 }
 
 .notification-box .text{
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    padding-left: 1em;
-    padding-top: 1.5em;
+    padding-top: 1.25em;
 }
 
 .notification-box h1{
     font-size: 1.1em;
-}
-
-.notification-box .subtitle{
-    font-family: panton;
 }
 
 .club-box .img{

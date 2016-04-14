@@ -52,19 +52,28 @@
                             %i.fa.fa-fw.fa-newspaper-o
                             FEED
                     #info.feed
-                        %h1
-                            Upcoming:
-                        %br
                         -@upcoming.each do |club|
+                            .notification
+                                %i.fa.fa-times
+                                .notification-box
+                                    .img{:style => "background-image: url(#{club.img})"}
+                                    .text
+                                        %h1
+                                            =club.name
+                                        %p.subtitle
+                                            =club.location
+                                        %p  
+                                            =club.meetingtime
+                        .notification
+                            %a{:href => "/"}
+                                %i.fa.fa-fw.fa-times
                             .notification-box
-                                .img{:style => "background-image: url(#{club.img})"}
+                                %i.fa.fa-fw.fa-clock-o
                                 .text
                                     %h1
-                                        =club.name
-                                    %p.subtitle
-                                        =club.location
-                                    %p  
-                                        =club.meetingtime
+                                        Robotics Club Meeting
+                                    %p
+                                        7:30, in the Room
                     %footer
                         .left
                             Made with

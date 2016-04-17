@@ -354,9 +354,20 @@ span.fa-search{
     font-size: 1.5em;
     border-radius: 100%;
     color: #fff;
-    background-color: #84C7FD;
     float: left;
     margin-right: 0.75em;
+}
+
+.fa-clock-o{
+    background-color: #84C7FD;
+}
+
+.fa-user{
+    background-color: #FD9E6D;
+}
+
+.notification-box .fa-times{
+    background-color: #FD797B;
 }
 
 .notification-box .text{

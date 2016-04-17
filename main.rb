@@ -11,8 +11,26 @@ require './rb/auth.rb'
 
 enable :sessions
 
+def startup
+    user = User.find_by(email: session[:username])
+    time = Time.new
+    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    Club.all.each do |club|
+        if club.members.include? session[:username] or club.head.include? session[:username]
+            clubday = days.index(club.meetingday)
+            if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0))
+                #If club is coming up, then push
+                user.notifications.push({:type => "clock-o", :title => club.name, :description => "#{club.meetingtime}, #{club.location}"}, :id => "#{club.name}#{club.meetingtime}")
+                puts "Notifications: #{user.notifications}"
+                user.save
+            end
+        end
+    end
+end
+
 get "/" do 
     if login? 
+        startup
         redirect "/dashboard/home"
     else
         $error = nil
@@ -25,9 +43,8 @@ get "/dashboard/home" do
     $path = "/dashboard/home"
     protected!
     @clubs = []
-    @user = User.find_by(email: session[:username]).email
     Club.all.each do |club|
-        if club.members.include? @user or club.head.include? @user
+        if club.members.include? session[:username] or club.head.include? session[:username]
             @clubs << club
         end
     end
@@ -38,25 +55,14 @@ get "/dashboard/browse" do
     $path = "/dashboard/browse"
     protected!
     @clubs = Club.all
-    @user = User.find_by(email: session[:username]).email
     partial :dashboard_browse, :layout => false
 end
 
 get "/dashboard/notifications" do
     $path = "/dashboard/notifications"
     protected!
-    @upcoming = []
-    time = Time.new
-    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    @user = User.find_by(email: session[:username]).email
-    Club.all.each do |club|
-        if club.members.include? @user or club.head.include? @user
-            clubday = days.index(club.meetingtime.split(",")[0])
-            if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0))
-                @upcoming << club
-            end
-        end
-    end
+    startup
+    @user = User.find_by(email: session[:username])
     partial :dashboard_notifications, :layout => false
 end
 
@@ -109,12 +115,11 @@ get "/dashboard/search" do
             @clubs.push(club)
         end
     end
-    @user = User.find_by(email: session[:username]).email
     partial :dashboard_search, :layout => false
 end
 
 post "/createclub" do
-    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [User.find_by(email: session[:username]).email], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location])
+    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [session[:username]], :members => [], :meetingtime => params[:time], :meetingday => params[:weekday], :location => params[:location])
     redirect "/dashboard/home"
 end
 
@@ -131,7 +136,6 @@ end
 get "/dashboard/club/:club" do
     $path = "/dashboard/club/#{params[:club]}"
     protected!
-    @user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
         people = "&cc="
@@ -152,11 +156,20 @@ end
 get "/join/:club" do
     $path = "/join/#{params[:club]}"
     protected!
-    user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        club.members << user
+        club.members << session[:username]
         club.save
+        club.head.each do |email|
+            head = User.find_by(email: email)
+            head.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}"})
+            head.save
+        end
+        club.board.each do |email|
+            board = User.find_by(email: email)
+            board.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}"})
+            board.save
+        end
         redirect "/dashboard/home"
     else
         redirect "/404"
@@ -166,11 +179,20 @@ end
 get "/leave/:club" do
     $path = "/leave/#{params[:club]}"
     protected!
-    user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        club.members.delete(user)
+        club.members.delete(session[:username])
         club.save
+        club.head.each do |email|
+            head = User.find_by(email: email)
+            head.notifications.push({:type => "times", :title => "Member Left", :description => "#{session[:username]} left #{club.name}"})
+            head.save
+        end
+        club.board.each do |email|
+            board = User.find_by(email: email)
+            board.notifications.push({:type => "times", :title => "Member Left", :description => "#{session[:username]} left #{club.name}"})
+            board.save
+        end
         redirect "/dashboard/home"
     else
         redirect "/404"
@@ -224,14 +246,17 @@ def dbinit
             t.string :passwordhash
             t.boolean :verified
             t.string :verification_code
+            t.string :notifications
         end
         create_table :clubs do |t|
             t.string :name
             t.string :description
             t.string :head, array: true
+            t.string :board, array: true
             t.string :img
             t.string :members, array: true
             t.string :meetingtime
+            t.string :meetingday
             t.string :location
         end
     end

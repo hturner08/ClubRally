@@ -54,7 +54,7 @@
                         %h1
                             Meeting Time:
                         %p
-                            =@club.meetingtime
+                            ="#{@club.meetingday}, #{@club.meetingtime}"
                         %br
                         %h1
                             Meeting Location:
@@ -79,14 +79,14 @@
                                     %a{:href => "mailto:#{member}"}
                                         =member
                                     %br
-                        -if @club.head.include? @user
+                        -if @club.head.include? session[:username]
                             %a.btn{:href => @list}
                                 MAIL CLUB
                             %a.btn.green{:href => "/edit/#{@club.name}"}
                                 EDIT CLUB
                             %a.btn.red{:href => "/delete/#{@club.name}"}
                                 DELETE CLUB
-                        -elsif @club.members.include? @user
+                        -elsif @club.members.include? session[:username]
                             %a.btn.red{:href => "/leave/#{@club.name}"}
                                 LEAVE CLUB
                         -else

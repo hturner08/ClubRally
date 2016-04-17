@@ -52,28 +52,21 @@
                             %i.fa.fa-fw.fa-newspaper-o
                             FEED
                     #info.feed
-                        -@upcoming.each do |club|
+                        -@user.notifications.each do |alert|
                             .notification
-                                %i.fa.fa-times
+                                %a{:href => "/"}
+                                    %i.fa.fa-fw.fa-times
                                 .notification-box
-                                    .img{:style => "background-image: url(#{club.img})"}
+                                    %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
                                     .text
                                         %h1
-                                            =club.name
-                                        %p.subtitle
-                                            =club.location
-                                        %p  
-                                            =club.meetingtime
-                        .notification
-                            %a{:href => "/"}
-                                %i.fa.fa-fw.fa-times
-                            .notification-box
-                                %i.fa.fa-fw.fa-clock-o
-                                .text
-                                    %h1
-                                        Robotics Club Meeting
-                                    %p
-                                        7:30, in the Room
+                                            =alert[:title]
+                                        %p
+                                            =alert[:description]
+                        -if @user.notifications.empty?
+                            %h1
+                                No notifications right now
+                                %i.fa.fa-frown-o
                     %footer
                         .left
                             Made with

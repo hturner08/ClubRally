@@ -59,7 +59,7 @@
                                     ="'#{params[:search]}'"
                         -@clubs.each do |club|
                             .club-box
-                                -if club.members.include? @user or club.head.include? @user
+                                -if club.members.include? session[:username] or club.head.include? session[:username]
                                     %a.full{:href => "/dashboard/club/#{club.name}"}
                                 .center
                                     .img{:style => "background-image: url(#{club.img})"}
@@ -67,7 +67,7 @@
                                         =club.name
                                     %p
                                         =club.description
-                                    -if club.members.include? @user or club.head.include? @user
+                                    -if club.members.include? session[:username] or club.head.include? session[:username]
                                         %a.btn{:href => "/dashboard/club/#{club.name}"}
                                             VIEW
                                     -else

@@ -60,7 +60,7 @@
                                     %h1
                                         =club.name
                                     %p
-                                        -if club.head.include? @user
+                                        -if club.head.include? session[:username]
                                             Club Head
                                         -else
                                             Member

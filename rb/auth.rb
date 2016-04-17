@@ -19,6 +19,8 @@ helpers do
     def protected!
         if login? == false
              redirect "/login"
+        else
+            startup
         end
     end
 end
@@ -69,7 +71,7 @@ post "/secureregister" do
         password_salt = BCrypt::Engine.generate_salt
         password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
         verify = "#{params[:email]}#{SecureRandom.hex}"
-        User.create(:salt => password_salt, :passwordhash => password_hash, :email => params[:email], :verified => false, :verification_code => verify)
+        User.create(:salt => password_salt, :passwordhash => password_hash, :email => params[:email], :verified => false, :verification_code => verify, :notifications => [])
         send_mail(params[:email], "Verify your email address", "Thank you for signing up for Club Rally. Go to http://clubrally.herokuapp.com/verify/#{verify} to activate your account")
         $register_error = nil
         redirect "/verify"

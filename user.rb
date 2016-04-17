@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+    serialize :notifications, Array
 end
 
 class Club < ActiveRecord::Base

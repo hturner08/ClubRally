@@ -54,8 +54,11 @@
                     #info.feed
                         -@user.notifications.each do |alert|
                             .notification
-                                %a{:href => "/"}
-                                    %i.fa.fa-fw.fa-times
+                                -if alert[:type] != "clock-o"
+                                    %a{:href => "/delete/notification/#{alert[:id]}"}
+                                        %i.fa.fa-fw.fa-times
+                                -else
+                                    %i.fa.fa-times.ghost
                                 .notification-box
                                     %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
                                     .text

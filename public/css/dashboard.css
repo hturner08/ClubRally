@@ -341,6 +341,10 @@ span.fa-search{
     line-height: 3.6666666666em;
 }
 
+.notification .ghost{
+    color: #F2F2F0;
+}
+
 .notification-box{
     width: 90%;
     height: 100%;

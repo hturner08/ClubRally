@@ -58,7 +58,18 @@
                                     %a{:href => "/delete/notification/#{alert[:id]}"}
                                         %i.fa.fa-fw.fa-times
                                 -else
-                                    %i.fa.fa-times.ghost
+                                    %a
+                                        %i.fa.fa-times.fa-fw.ghost
+                                .notification-box
+                                    %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
+                                    .text
+                                        %h1
+                                            =alert[:title]
+                                        %p
+                                            =alert[:description]
+                            .notification
+                                %a{:href => "/delete/notification/#{alert[:id]}"}
+                                    %i.fa.fa-fw.fa-times
                                 .notification-box
                                     %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
                                     .text

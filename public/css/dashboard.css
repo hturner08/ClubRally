@@ -332,6 +332,7 @@ span.fa-search{
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    margin-bottom: 1px;
 }
 
 .notification .fa-times{
@@ -342,7 +343,7 @@ span.fa-search{
 }
 
 .notification .ghost{
-    color: #F2F2F0;
+    visibility: hidden;
 }
 
 .notification-box{

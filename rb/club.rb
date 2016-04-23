@@ -5,7 +5,7 @@ get "/dashboard/createclub" do
 end
 
 post "/createclub" do
-    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [session[:username]], :members => [], :meetingtime => params[:time], :meetingday => params[:weekday], :location => params[:location])
+    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [session[:username]], :board => [], :members => [], :meetingtime => params[:time], :meetingday => params[:weekday], :location => params[:location])
     redirect "/dashboard/home"
 end
 

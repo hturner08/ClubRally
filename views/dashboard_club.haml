@@ -80,8 +80,9 @@
                                     %a{:href => "mailto:#{board}"}
                                         =board
                                     %br
-                            %a.add{:onclick => ""}
-                                + Add Board Member
+                            -if @club.head.include? session[:username]
+                                %a.add{:onclick => ""}
+                                    + Add Board Member
                         %br
                         %h1
                             Members

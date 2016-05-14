@@ -174,7 +174,11 @@ footer .left p{
     margin: 0;
 }
 
-footer .right a{
+footer .right{
     padding-right: 5em;
+}
+
+footer .right a{
     margin-bottom: 0;
+    margin-left: 1em;
 }

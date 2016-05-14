@@ -28,6 +28,9 @@ get "/dashboard/club/:club" do
         @club.members.each do |member|
             people << "#{member};"
         end
+        @club.board.each do |member|
+            people << "#{member};"
+        end
         @list = "mailto:#{session[:username]}?subject=#{@club.name}"
         if @club.members.length > 0
             @list << people

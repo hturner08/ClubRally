@@ -52,33 +52,36 @@
                             %i.fa.fa-fw.fa-users
                             MY CLUBS
                     #info
-                        -@clubs.each do |club|
-                            .club-box
-                                %a.full{:href => "/dashboard/club/#{club.name}"}
+                        #contain
+                            -@clubs.each do |club|
+                                .club-box
+                                    %a.full{:href => "/dashboard/club/#{club.name}"}
+                                    .center
+                                        .img{:style => "background-image: url(#{club.img})"}
+                                        %h1
+                                            =club.name
+                                        %p
+                                            -if club.head.include? session[:username]
+                                                Club Head
+                                            -elsif club.board.include? session[:username]
+                                                Board Member
+                                            -else
+                                                Member
+                                        %a.btn{:href => "/dashboard/club/#{club.name}"}
+                                            VIEW
+                            -if @clubs.length == 0
+                                .club-box#browse-club
+                                    %a.full{:href => "/dashboard/browse"}
+                                    .center
+                                        %i.fa.fa-fw.fa-folder-open
+                                        %p
+                                            Browse Clubs
+                            .club-box#add-club
+                                %a.full{:href => "/dashboard/createclub"}
                                 .center
-                                    .img{:style => "background-image: url(#{club.img})"}
-                                    %h1
-                                        =club.name
+                                    %i.fa.fa-fw.fa-plus
                                     %p
-                                        -if club.head.include? session[:username]
-                                            Club Head
-                                        -else
-                                            Member
-                                    %a.btn{:href => "/dashboard/club/#{club.name}"}
-                                        VIEW
-                        -if @clubs.length == 0
-                            .club-box#browse-club
-                                %a.full{:href => "/dashboard/browse"}
-                                .center
-                                    %i.fa.fa-fw.fa-folder-open
-                                    %p
-                                        Browse Clubs
-                        .club-box#add-club
-                            %a.full{:href => "/dashboard/createclub"}
-                            .center
-                                %i.fa.fa-fw.fa-plus
-                                %p
-                                    Create Club
+                                        Create Club
                     %footer
                         .left
                             Made with

@@ -55,10 +55,14 @@
                     #info
                         %form#createclub{:action => "/editclub", :method => "post"}
                             %input.text{:type => "text", :name => "name", :value => @club.name, :hidden => ""}
+                            %p
+                                Club Description:
                             %input.text{:type => "text", :name => "description", :value => @club.description}
-                            %br
+                            %p
+                                Club Image:
                             %input.text{:type => "text", :name => "img", :value => @club.img}
-                            %br
+                            %p
+                                Meeting Time:
                             %select{:name => "weekday"}
                                 %option{:value => "Sunday"}
                                     Sunday
@@ -75,10 +79,10 @@
                                 %option{:value => "Saturday"}
                                     Saturday
                             %input.text-small{:type => "text", :name => "time", :value => "12:00pm"}
-                            %br
+                            %p
+                                Meeting Location:
                             %input.text{:type => "text", :name => "location", :value => @club.location}
-                            %br
-                            %input.btn{:type => "submit", :value => "EDIT"}
+                            %input.btn{:type => "submit", :value => "SAVE CHANGES"}
                     %footer
                         .left
                             Made with

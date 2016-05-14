@@ -1,0 +1,46 @@
+@font-face{
+    font-family: montserrat;
+    src: url(/fonts/montserrat/Montserrat-Regular.otf);
+}
+
+@font-face{
+    font-family: sourcesanspro;
+    src: url(/fonts/source-sans-pro/SourceSansPro-Regular.otf);
+}
+
+body{
+    margin: 0;
+    padding: 2em;
+}
+
+h1, h2, h3{
+    margin: 0;
+    font-family: montserrat;
+    color: #464646;
+}
+
+hr{
+    margin-bottom: 1em;
+}
+
+h1{
+    font-size: 2em;
+}
+
+h2{
+    font-size: 1.2em;
+    color: #6c6c6c;
+}
+
+h3{
+    font-size: 1.1em;
+}
+
+p, ol{
+    font-family: sourcesanspro;
+    color: #6c6c6c;
+}
+
+p{ 
+    margin-top: 0.3em;
+}

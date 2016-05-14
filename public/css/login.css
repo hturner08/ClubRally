@@ -27,7 +27,7 @@ body, html{
 }
 
 #background{
-    background-image: url("/graphics/cover.jpeg");
+    background-image: url("/graphics/signup.jpeg");
     background-size: cover;
     background-position: center center;
     position: absolute;

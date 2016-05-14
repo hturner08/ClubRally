@@ -69,8 +69,23 @@
                                     =head
                         %br
                         %h1
+                            Board
+                            ="(#{@club.board.length}):"
+                        %p
+                            -if @club.board.length == 0
+                                No board members yet
+                                %br
+                            -else
+                                -@club.board.each do |board|
+                                    %a{:href => "mailto:#{board}"}
+                                        =board
+                                    %br
+                            %a.add{:onclick => ""}
+                                + Add Board Member
+                        %br
+                        %h1
                             Members
-                            ="(#{@club.members.length})"
+                            ="(#{@club.members.length}):"
                         %p.member
                             -if @club.members.length == 0
                                 No members so far

@@ -253,14 +253,16 @@ span.fa-search{
 
 #info #contain{
     margin: 0 auto;
-    width: 100%;
-    padding-left: 3em;
-    padding-right: 3em;
 }
 
 #info p{
     font-family: montserrat;
     color: #6c6c6c;
+}
+
+#createclub p{
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
 
 .club{
@@ -289,6 +291,17 @@ span.fa-search{
 
 .club a:hover, .feed a:hover{
     color: #373737;
+}
+
+.club .add{
+    cursor: pointer;
+    color: #52B3D9;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+}
+
+.club .add:hover{
+    color: #4a98b7;
 }
 
 .feed{
@@ -325,7 +338,7 @@ span.fa-search{
 }
 
 .notification{
-    width: 55%;
+    width: 30em;
     position: relative;
     height: 5.5em;
     display: -webkit-box;
@@ -591,10 +604,6 @@ footer .right .icon{
         padding-left: 0;
     }
 
-    .notification-box{
-        width: 85%;
-        margin: 0 auto;
-    }
 }
 
 @media screen and (max-width: 670px){
@@ -655,5 +664,10 @@ footer .right .icon{
     .linebreak{
         display: block;
         margin-bottom: 1.7em;
+    }
+    
+    .notification{
+        margin: 0 auto;
+        width: 80%;
     }
 }

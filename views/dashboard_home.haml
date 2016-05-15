@@ -44,7 +44,9 @@
                             %i.fa.fa-newspaper-o.fa-fw
                             .color
                         .right
-                            FEED
+                            FEED 
+                            -unless user.notifications.length == 0
+                                ="(#{user.notifications.length})"
                 #content
                     #color-strip
                     %header

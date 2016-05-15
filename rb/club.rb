@@ -76,12 +76,14 @@ get "/leave/:club" do
         club.save
         club.head.each do |email|
             head = User.find_by(email: email)
-            head.notifications.push({:type => "sign-out", :title => "Member Left", :description => "#{session[:username]} left #{club.name}"})
+            head.notifications.push({:type => "sign-out", :title => "Member Left", :description => "#{session[:username]} left #{club.name}", :id => head.notification_id})
+            head.notification_id += 1
             head.save
         end
         club.board.each do |email|
             board = User.find_by(email: email)
-            board.notifications.push({:type => "sign-out", :title => "Member Left", :description => "#{session[:username]} left #{club.name}"})
+            board.notifications.push({:type => "sign-out", :title => "Member Left", :description => "#{session[:username]} left #{club.name}", :id => board.notification_id})
+            board.notification_id += 1
             board.save
         end
         redirect "/dashboard/home"

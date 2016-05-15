@@ -45,8 +45,8 @@
                             .color
                         .right
                             FEED
-                            -unless user.notifications.length == 0
-                                ="(#{user.notifications.length})"
+                            -unless @user.notifications.length == 0
+                                ="(#{@user.notifications.length})"
                 #content
                     #color-strip
                     %header

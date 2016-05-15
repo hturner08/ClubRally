@@ -1,6 +1,7 @@
 get "/dashboard/createclub" do
     $path = "/dashboard/createclub"
     protected!
+    startup
     partial :dashboard_createclub, :layout => false
 end
 
@@ -22,6 +23,7 @@ end
 get "/dashboard/club/:club" do
     $path = "/dashboard/club/#{params[:club]}"
     protected!
+    startup
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
         people = "&cc="

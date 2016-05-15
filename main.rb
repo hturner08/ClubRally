@@ -31,6 +31,7 @@ end
 get "/dashboard/home" do
     $path = "/dashboard/home"
     protected!
+    startup
     @clubs = []
     Club.all.each do |club|
         if club.members.include? session[:username] or club.head.include? session[:username]
@@ -43,6 +44,7 @@ end
 get "/dashboard/browse" do
     $path = "/dashboard/browse"
     protected!
+    startup
     @clubs = Club.all
     partial :dashboard_browse, :layout => false
 end
@@ -82,6 +84,7 @@ end
 get "/dashboard/search" do
     $path = "/dashboard/search?search=#{params[:search]}" 
     protected!
+    startup
     query = params[:search].downcase
     @clubs = []
     Club.all.each do |club|

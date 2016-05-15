@@ -17,9 +17,9 @@ def startup
     end
 end
 
-get "/delete/notification/:identifier" do
+get "/delete/notification/:id" do
     user = User.find_by(email: session[:username])
-    user.notifications.delete_if { |h| h[:id] == params[:identifier] }
+    user.notifications.delete_if { |h| h[:id] == params[:id].to_i }
     user.save
     redirect "/dashboard/notifications"
 end

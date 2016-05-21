@@ -166,8 +166,7 @@ header .btn{
 .member{
     width: 15em;
     display: inline-block;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    margin: 0 0.5em 1em 0.5em;
 }
 
 .member .img{
@@ -209,6 +208,10 @@ header .btn{
 
 #spencer{
     background-image: url(/graphics/members/sdavis.jpg);
+}
+
+#munda{
+    background-image: url(/graphics/members/ali.jpg);
 }
 
 footer{

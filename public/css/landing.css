@@ -218,6 +218,10 @@ header .btn{
     background-image: url(/graphics/members/ali2.jpg);
 }
 
+#koala{
+    background-image: url(/graphics/members/awang.jpeg);
+}
+
 footer{
     width: 100vw;
     font-family: montserrat;

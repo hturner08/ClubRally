@@ -1,27 +1,9 @@
-function toggleChat() {
-    $_Tawk.toggle();
-    return false;
+function addBoard(){
+    $("#popup").show();
+    $("#overlay").show();
 }
 
-$(window).scroll(function (event) {
-    var scroll = $(window).scrollTop();
-    if(scroll > 200){
-        $("nav").css({
-            "background-color": "#2E3842"
-        });
-    }else if(scroll < 200){
-        $("nav").css({
-            "background-color": "inherit"
-        });
-    }
-    
-    if(scroll > 80){
-        $("nav#main").css({
-            "background-color": "#2E3842"
-        });
-    }else if(scroll < 80){
-        $("nav#main").css({
-            "background-color": "inherit"
-        });
-    }
-});
+function closeBoard(){
+    $("#popup").hide();
+    $("#overlay").hide();
+}

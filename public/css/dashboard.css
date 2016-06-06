@@ -269,11 +269,15 @@ span.fa-search{
     padding-left: 10%;
 }
 
-.club h1, .feed h1{
+.club h1, .feed h1, .frown{
     font-family: montserrat;
     color: #464646;
     font-size: 1em;
     margin: 0;
+}
+
+.frown{
+    margin-left: 10%;
 }
 
 .club p, .feed p{
@@ -434,10 +438,6 @@ span.fa-search{
     background-color: #E06B6C;
 }
 
-#add-club, #browse-club{
-    color: #6c6c6c;
-}
-
 .club-box a.full{
     position: absolute;
     height: 100%;
@@ -445,14 +445,6 @@ span.fa-search{
     top: 0;
     left: 0;
     z-index: 50;
-}
-
-#add-club i, #browse-club i{
-    font-size: 4em;
-}
-
-#add-club p, #browse-club p{
-    font-family: montserrat;   
 }
 
 #createclub{
@@ -532,6 +524,56 @@ span.fa-search{
     color: #f2f2f2;
 }
 
+#overlay{
+    z-index: 100;
+    opacity: 0.6;
+    background-color: #464646;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#popup{
+    width: 35vw;
+    height: 75vh;
+    border: 1px solid #6c6c6c;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 1.2em 1.5em 1.2em 1.5em;
+}
+
+#popup h1{
+    margin: 0;
+    font-family: montserrat;
+    font-size: 1.2em;
+    color: #464646;
+}
+
+#popup hr{
+    border-top: 1px solid #464646;
+}
+
+#popup .fa-times{
+    cursor: pointer;
+    color: #b9b9b9;
+    position: absolute;
+    right: 1.5em;
+    top: 1.2em;
+}
+
+#popup .members{
+    overflow-y: scroll;
+}
 footer{
     position:absolute;
     bottom:0;

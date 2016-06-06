@@ -47,6 +47,13 @@
                             FEED
                             -unless @user.notifications.length == 0
                                 ="(#{@user.notifications.length})"
+                    .opt
+                        %a{:href => "/dashboard/createclub"}
+                        .left
+                            %i.fa.fa-plus.fa-fw
+                            .color
+                        .right
+                            CREATE A CLUB
                 #content
                     #color-strip
                     %header
@@ -70,7 +77,7 @@
                                         %p
                                             =alert[:description]
                         -if @user.notifications.empty?
-                            %h1
+                            %h1.frown
                                 No notifications right now
                                 %i.fa.fa-frown-o
                     %footer

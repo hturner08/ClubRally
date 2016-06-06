@@ -47,6 +47,13 @@
                             FEED 
                             -unless @user.notifications.length == 0
                                 ="(#{@user.notifications.length})"
+                    .opt
+                        %a{:href => "/dashboard/createclub"}
+                        .left
+                            %i.fa.fa-plus.fa-fw
+                            .color
+                        .right
+                            CREATE A CLUB
                 #content
                     #color-strip
                     %header
@@ -72,18 +79,9 @@
                                         %a.btn{:href => "/dashboard/club/#{club.name}"}
                                             VIEW
                             -if @clubs.length == 0
-                                .club-box#browse-club
-                                    %a.full{:href => "/dashboard/browse"}
-                                    .center
-                                        %i.fa.fa-fw.fa-folder-open
-                                        %p
-                                            Browse Clubs
-                            .club-box#add-club
-                                %a.full{:href => "/dashboard/createclub"}
-                                .center
-                                    %i.fa.fa-fw.fa-plus
-                                    %p
-                                        Create Club
+                                %h1.frown
+                                    You have no clubs. Join some!
+                                    %i.fa.fa-frown-o
                     %footer
                         .left
                             Made with

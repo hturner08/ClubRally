@@ -24,7 +24,7 @@
                             %input{:type => "text", :name => "search"}
             #body
                 #sidebar
-                    .opt.active
+                    .opt
                         %a{:href => "/dashboard/home"}
                         .left
                             %i.fa.fa-users.fa-fw
@@ -47,6 +47,13 @@
                             FEED
                             -unless @user.notifications.length == 0
                                 ="(#{@user.notifications.length})"
+                    .opt.active
+                        %a{:href => "/dashboard/createclub"}
+                        .left
+                            %i.fa.fa-plus.fa-fw
+                            .color
+                        .right
+                            CREATE A CLUB
                 #content
                     #color-strip
                     %header

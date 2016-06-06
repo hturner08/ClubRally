@@ -5,7 +5,7 @@ def startup
     Club.all.each do |club|
         if club.members.include? session[:username] or club.head.include? session[:username]
             @user.notifications.delete_if { |h| h[:title] == club.name}
-            clubday = days.index(club.meetingday)
+            clubday = days.index(club.meetingtime.split(',')[0])
             if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0))
                 #If club is coming up, then push
                 @user.notifications.push({:type => "clock-o", :title => club.name, :description => "#{club.meetingtime}, #{club.location}", :id => @user.notification_id})

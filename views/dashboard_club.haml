@@ -7,9 +7,24 @@
         %title
             Dashboard
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
+        %link{:href => "/swal/dist/sweetalert.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
+        %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"}
+        %script{:src => "/scripts/util.js"}
     %body
+        #overlay{:hidden => ""}
+        #popup{:hidden => ""}
+            %h1
+                Add Board Member
+            %i.fa.fa-times{:onclick => "closeBoard()"}
+            %hr
+            .members
+                -@club.members.each do |member|
+                    %section
+                        %p
+                            =member
+                        %a{:href => "/#{@club}/addboard/#{member}"}
         #wrapper
             %nav
                 .left
@@ -47,6 +62,13 @@
                             FEED
                             -unless @user.notifications.length == 0
                                 ="(#{@user.notifications.length})"
+                    .opt
+                        %a{:href => "/dashboard/createclub"}
+                        .left
+                            %i.fa.fa-plus.fa-fw
+                            .color
+                        .right
+                            CREATE A CLUB
                 #content
                     #color-strip
                     %header
@@ -56,7 +78,7 @@
                         %h1
                             Meeting Time:
                         %p
-                            ="#{@club.meetingday}, #{@club.meetingtime}"
+                            =@club.meetingtime
                         %br
                         %h1
                             Meeting Location:
@@ -83,7 +105,7 @@
                                         =board
                                     %br
                             -if @club.head.include? session[:username]
-                                %a.add{:onclick => ""}
+                                %a.add{:onclick => "addBoard()"}
                                     + Add Board Member
                         %br
                         %h1

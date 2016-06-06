@@ -34,7 +34,7 @@ get "/dashboard/home" do
     startup
     @clubs = []
     Club.all.each do |club|
-        if club.members.include? session[:username] or club.head.include? session[:username]
+        if club.members.include? session[:username] or club.board.include? session[:username] or club.head.include? session[:username]
             @clubs << club
         end
     end
@@ -121,7 +121,6 @@ def dbinit
             t.string :img
             t.string :members, array: true
             t.string :meetingtime
-            t.string :meetingday
             t.string :location
         end
     end

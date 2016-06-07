@@ -166,3 +166,17 @@ a:hover{
 p{
     font-family: sourcesanspro;
 }
+
+@media screen and (max-width: 600px){
+    #vertical-box{
+        width: 95%;
+    }
+    
+    #vertical-box .text, #vertical-box .forgot, .terms, .createaccount, #vertical-box .btn{
+        width: 95%;
+    }
+    
+    .error{
+        width: calc(95% - 1px);
+    }
+}

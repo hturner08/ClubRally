@@ -158,15 +158,17 @@ header .btn{
 }
 
 #grid{
-    width: 51em;
+    width: 100%;
     margin: 1.5em auto;
-    padding: 0;
+    padding-left: 10em;
+    padding-right: 10em;
+    box-sizing: border-box;
 }
 
 .member{
     width: 15em;
     display: inline-block;
-    margin: 0 0.5em 1em 0.5em;
+    margin: 0 calc(0.5em - 4px) 1em 0.5em;
 }
 
 .member .img{
@@ -252,4 +254,53 @@ footer .right{
 footer .right a{
     margin-bottom: 0;
     margin-left: 1em;
+}
+
+@media screen and (max-width: 1100px){
+    #grid{
+        padding-left: 5em;
+        padding-right: 5em;
+    }
+}
+
+@media screen and (max-width: 850px){
+    footer{
+        display: block;
+        height: 5em;
+    }
+    
+    footer .left, footer .right{
+        text-align: center;
+        padding: 0;
+    }
+    
+    footer .left p{
+        padding: 0;
+        margin-bottom: 0.1em;
+    }
+    
+    .bodybox p{
+        width: 60%;
+    }
+
+}
+
+@media screen and (max-width: 650px){
+    nav .left{
+        padding-left: 2em;
+    }
+    
+    nav .right{
+        padding-right: 2em;
+    }
+    
+    header h1{
+        font-size: 1.5em;
+    }
+}
+    
+@media screen and (max-width: 550px){
+    .bodybox p{
+        width: 80%;
+    }
 }

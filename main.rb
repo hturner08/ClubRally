@@ -28,6 +28,10 @@ get "/terms" do
     partial :terms, :layout => false
 end
 
+get "/forgot" do
+    partial :wip, :layout => false
+end
+
 get "/dashboard/home" do
     $path = "/dashboard/home"
     protected!

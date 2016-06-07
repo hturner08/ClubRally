@@ -269,10 +269,13 @@ span.fa-search{
     padding-left: 10%;
 }
 
-.club h1, .feed h1, .frown{
+.club h1, .notification-box h1, .frown{
     font-family: montserrat;
     color: #464646;
     font-size: 1em;
+}
+
+.club h1, .notification-box h1{
     margin: 0;
 }
 
@@ -306,10 +309,6 @@ span.fa-search{
 
 .club .add:hover{
     color: #4a98b7;
-}
-
-.feed{
-    padding-left: 10%;
 }
 
 .club-box{
@@ -508,6 +507,8 @@ span.fa-search{
     color: #6c6c6c;
     padding-left: 1em;
     box-sizing: border-box;
+    margin-bottom: 0.2em;
+    margin-left: -1px;
 }
 
 #info .error{
@@ -665,7 +666,7 @@ footer .right .icon{
     
     .opt{
         display: inline-block;
-        width: 33.3333333333vw;
+        width: 25vw;
         border-bottom: 0px;
         margin-right: -0.25em;
         border-right: 1px solid #E4E4E2;
@@ -675,12 +676,12 @@ footer .right .icon{
         width: 100%;
     }
     
-    .opt:nth-child(3){
+    .opt:nth-child(4){
         border-right: 0px;
     }
     
     #info #contain{
-        width: 17em;
+        width: 100%;
         margin: 0 auto;
         padding: 0;
     }

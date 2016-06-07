@@ -62,10 +62,11 @@
                             SEARCH
                     #info
                         -if @clubs.length == 0
-                            .center
-                                %p
-                                    There were no clubs found for the search
-                                    ="'#{params[:search]}'"
+                            %h1.frown
+                                There were no clubs found for the search
+                                ="'#{params[:search]}'."
+                                %i.fa.fa-frown-o
+                                    
                         -@clubs.each do |club|
                             .club-box
                                 -if club.members.include? session[:username] or club.head.include? session[:username]

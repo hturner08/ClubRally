@@ -13,6 +13,8 @@ require './rb/club.rb'
 
 enable :sessions
 
+$footer = [{:path => "/terms", :text => "TERMS OF SERVICE"}, {:path => "https://docs.google.com/forms/d/1mtfMw_Ok2Wxs8SiRH8poPpYui1emb-YeGUjkG6voIwM/viewform", :text => "REPORT A BUG"}, {:path => "mailto:jshen@andover.edu", :text => "CONTACT"}]
+
 get "/" do 
     if login? 
         startup
@@ -38,7 +40,7 @@ get "/dashboard/home" do
     startup
     @clubs = []
     Club.all.each do |club|
-        if club.members.include? session[:username] or club.board.include? session[:username] or club.head.include? session[:username]
+        if clubincludesuser?(club)
             @clubs << club
         end
     end

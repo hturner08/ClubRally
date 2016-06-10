@@ -1,3 +1,33 @@
+def clubincludesuser? (club)
+    if club.members.include? session[:username] or club.board.include? session[:username] or club.head.include? session[:username]
+        return true
+    else
+        return false
+    end
+end
+
+get "/addboard/:club/:member" do
+    if params[:club].head.include? session[:username] and Club.all.exists?(:name => params[:club]) and User.all.exists?(:email => params[:member])
+        club = Club.find_by(name: params[:club])
+        if club.members.include? params[:member] and club.board.include? session[:username] == false and    club.head.include? session[:username] == false
+            club.board << params[:member]
+            club.members.delete(params[:member])
+            club.save
+            club.head.each do |email|
+                head = User.find_by(email: email)
+                head.notifications.push({:type => "plus", :title => "Board updated", :description => "#{params[:member]} added to board of #{club.name}", :id => head.notification_id})
+                head.notification_id += 1
+                head.save
+            end
+            redirect "/dashboard/club/#{params[:club]}"
+        else
+            redirect "/404"
+        end
+    else
+        redirect "/404"
+    end
+end
+
 get "/dashboard/createclub" do
     $path = "/dashboard/createclub"
     protected!
@@ -49,19 +79,21 @@ get "/join/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        club.members << session[:username]
-        club.save
-        club.head.each do |email|
-            head = User.find_by(email: email)
-            head.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => head.notification_id})
-            head.notification_id += 1
-            head.save
-        end
-        club.board.each do |email|
-            board = User.find_by(email: email)
-            board.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => board.notification_id})
-            board.notification_id += 1
-            board.save
+        if clubincludesuser? == false
+            club.members << session[:username]
+            club.save
+            club.head.each do |email|
+                head = User.find_by(email: email)
+                head.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => head.notification_id})
+                head.notification_id += 1
+                head.save
+            end
+            club.board.each do |email|
+                board = User.find_by(email: email)
+                board.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => board.notification_id})
+                board.notification_id += 1
+                board.save
+            end
         end
         redirect "/dashboard/home"
     else

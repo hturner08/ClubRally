@@ -85,9 +85,13 @@
                                             JOIN
                     %footer
                         .left
-                            Made with
-                            %i.fa.fa-heart
-                            in Andover
+                            %p
+                                Made with 
+                                %i.fa.fa-heart
+                                in 
+                                %a{:href => "https://www.andover.edu", :target => "_blank"}
+                                    Andover
                         .right
-                            %a{:href => "mailto:jshen@andover.edu"}
-                                CONTACT
+                            -$footer.each do |link|
+                                %a{:href => link[:path]}
+                                    =link[:text]

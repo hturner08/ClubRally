@@ -3,7 +3,7 @@ def startup
     time = Time.new
     days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     Club.all.each do |club|
-        if club.members.include? session[:username] or club.head.include? session[:username]
+        if clubincludesuser?(club)
             @user.notifications.delete_if { |h| h[:title] == club.name}
             clubday = days.index(club.meetingtime.split(',')[0])
             if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0))

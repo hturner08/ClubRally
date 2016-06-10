@@ -61,30 +61,30 @@
                             %i.fa.fa-fw.fa-newspaper-o
                             FEED
                     #info.feed
-                        -@user.notifications.each do |alert|
-                            .notification
+                        -@user.notifications.each do |alert|     
+                            .notification-box
+                                %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
+                                .text
+                                    %h1
+                                        =alert[:title]
+                                    %p
+                                        =alert[:description]
                                 -if alert[:type] != "clock-o"
                                     %a{:href => "/delete/notification/#{alert[:id]}"}
                                         %i.fa.fa-fw.fa-times
-                                -else
-                                    %a
-                                        %i.fa.fa-times.fa-fw.ghost
-                                .notification-box
-                                    %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
-                                    .text
-                                        %h1
-                                            =alert[:title]
-                                        %p
-                                            =alert[:description]
                         -if @user.notifications.empty?
                             %h1.frown
                                 No notifications right now
                                 %i.fa.fa-frown-o
                     %footer
                         .left
-                            Made with
-                            %i.fa.fa-heart
-                            in Andover
+                            %p
+                                Made with 
+                                %i.fa.fa-heart
+                                in 
+                                %a{:href => "https://www.andover.edu", :target => "_blank"}
+                                    Andover
                         .right
-                            %a{:href => "mailto:jshen@andover.edu"}
-                                CONTACT
+                            -$footer.each do |link|
+                                %a{:href => link[:path]}
+                                    =link[:text]

@@ -244,10 +244,11 @@ span.fa-search{
 
 #info{
     width: 100%;
-    height: calc(100vh - 8.5em);
+    height: calc(100vh - 13.5em);
     overflow-y: scroll;
     padding-top: 3em;
-    padding-bottom: 3em;
+    margin-bottom: 5em;
+    padding-left: 3em;
     box-sizing: border-box;
 }
 
@@ -269,18 +270,11 @@ span.fa-search{
     padding-left: 10%;
 }
 
-.club h1, .notification-box h1, .frown{
+.club h1, .notification-box h1, .frown, .browse h1{
     font-family: montserrat;
     color: #464646;
     font-size: 1em;
-}
-
-.club h1, .notification-box h1{
     margin: 0;
-}
-
-.frown{
-    margin-left: 10%;
 }
 
 .club p, .feed p{
@@ -313,34 +307,47 @@ span.fa-search{
 
 .club-box{
     border: 1px solid #b9b9b9;
-    width: 17em;
-    height: 20em;
+    width: 18em;
+    height: 22em;
     position: relative;
     margin-left: 1em;
     margin-bottom: 1em;
     text-align: center;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
     box-sizing: border-box;
     vertical-align: text-top;
     display: inline-block;
 }
 
 .club-box h1{
-    margin-bottom: 0;
-    margin-top: 0;
     font-family: montserrat;
     color: #464646;
     font-size: 1.2em;
+    word-wrap: break-word;
+    margin-bottom: 0;
 }
 
 .club-box p{
     margin-top: 0;
+    margin-bottom: 1.5em;
     color: #6c6c6c;
     font-family: sourcesanspro;
 }
 
-.notification{
+.club-box .subtitle{
+    font-size: 0.75em;
+    margin-top: 1.25em;
+    text-decoration: none;
+}
+
+.club-box .subtitle a{
+    text-decoration: none;
+    color: #464646;
+}
+
+
+/*.notification{
     width: 30em;
     position: relative;
     height: 5.5em;
@@ -349,22 +356,30 @@ span.fa-search{
     display: -ms-flexbox;
     display: flex;
     margin-bottom: 1px;
-}
+}*/
 
-.notification .fa-times{
+/*.notification .fa-times{
     color: #6c6c6c;
     font-size: 1.5em;
     padding-right: 0.7em;
     line-height: 3.6666666666em;
-}
+}*/
 
-.notification .ghost{
+/*.notification .ghost{
     visibility: hidden;
 }
 
 .notification-box{
     width: 90%;
     height: 100%;
+    border: 1px solid #b9b9b9;
+    position: relative;
+}*/
+
+.notification-box{
+    position: relative;
+    width: 27em;
+    height: 5.5em;
     border: 1px solid #b9b9b9;
 }
 
@@ -379,12 +394,26 @@ span.fa-search{
     margin-right: 0.75em;
 }
 
+.notification-box .fa-times{
+    color: #6c6c6c;
+    font-size: 1em;
+    position: absolute;
+    top: 0.85em;
+    right: 0.85em;
+    padding: 0;
+    margin: 0;
+}
+
 .fa-clock-o{
     background-color: #84C7FD;
 }
 
 .fa-user{
     background-color: #FD9E6D;
+}
+
+.notification-box .fa-plus{
+    background-color: #2ECC71;
 }
 
 .notification-box .fa-sign-out{
@@ -417,8 +446,18 @@ span.fa-search{
     font-family: montserrat;
 }
 
+.club .btn{
+    line-height: 3em;
+}
+
+.club-box .btn-empty{
+    border: 2px solid #22A7F0;
+    background-color: #F2F2F0;
+    color: #464646;
+}
+
 .club p.member{
-    margin-bottom: 2em;
+    margin-bottom: 0.5em;
 }
 
 .club .btn:hover{
@@ -437,19 +476,9 @@ span.fa-search{
     background-color: #E06B6C;
 }
 
-.club-box a.full{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 50;
-}
-
 #createclub{
     text-align: left;
     width: 30em;
-    padding-left: 10%;
 }
 
 #createclub .text{
@@ -462,6 +491,21 @@ span.fa-search{
     color: #6c6c6c;
     padding-left: 1em;
     margin-bottom: 0.2em;
+}
+
+
+#createclub .error{
+    margin: 0 auto;
+    text-align: center;
+    background-color: #E06B6C;
+    height: 2.7em;
+    width: 100%;
+}
+
+#createclub .error p{
+    font-size: 1em;
+    line-height: 2.7em;
+    color: #f2f2f2;
 }
 
 #createclub .btn{
@@ -511,20 +555,6 @@ span.fa-search{
     margin-left: -1px;
 }
 
-#info .error{
-    margin: 0 auto;
-    text-align: center;
-    background-color: #E06B6C;
-    height: 2.7em;
-    width: 30em;
-}
-
-#info .error p{
-    font-size: 1em;
-    line-height: 2.7em;
-    color: #f2f2f2;
-}
-
 #overlay{
     z-index: 100;
     opacity: 0.6;
@@ -550,7 +580,8 @@ span.fa-search{
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 5px;
-    padding: 1.2em 1.5em 1.2em 1.5em;
+    padding: 1.2em 1.5em 0 1.5em;
+    overflow: hidden;
 }
 
 #popup h1{
@@ -574,44 +605,84 @@ span.fa-search{
 
 #popup .members{
     overflow-y: scroll;
+    height: 90%;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    width: calc(35vw + 15px);
+    margin: 0 -1.5em -1.2em -1.5em;
+    box-sizing: border-box;
 }
-footer{
-    position:absolute;
-    bottom:0;
-    width: 80%;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    height:3em;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+
+#popup section{
     font-family: montserrat;
     color: #464646;
-    visibility: hidden;
+    height: 3em;
+    
+}
+
+#popup section p, #popup section .btn{
+    line-height: 3em;
+    margin: 0;
+    font-size: 1em;
+    float: left;
+}
+
+#popup section .btn{
+    float: right;
+    border: 1px solid #b9b9b9;
+    color: #b9b9b9;
+    margin-top: 0.5em;
+    padding: 0.5em;
+    line-height: 1em;
+    text-decoration: none;
+}
+
+#popup .members hr{
+    border-top: 1px solid #b9b9b9;
 }
 
 .fa-heart{
     color: #c0392b;
 }
 
-footer .right{
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    text-align: right;
+footer{
+    width: 100%;
+    font-family: montserrat;
+    color: #464646;
+    height: 5em;
+    position: absolute;
+    bottom: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    
 }
 
 footer a{
     color: #6c6c6c;
     text-decoration: none;
-    margin-right: 1em;
 }
 
-footer .right .icon{
-    margin-right: 0em;
+footer .left p{
+    padding-left: 5em;
+    margin: 0;
+    padding-top: 2em;
+}
+
+footer .right{
+    padding-right: 5em;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: right;
+    padding-top: 2em;
+}
+
+footer .right a{
+    margin-bottom: 0;
+    margin-left: 1em;
 }
 
 *:focus{
@@ -624,6 +695,24 @@ footer .right .icon{
 
 .linebreak{
     display: inline;
+}
+
+@media screen and (max-width: 1100px){
+    footer{
+        display: block;
+        height: 4em;
+    }
+    
+    footer .left, footer .right{
+        text-align: center;
+        padding: 0;
+    }
+    
+    footer .left p{
+        padding: 0;
+        margin-bottom: 0.1em;
+    }
+
 }
 
 @media screen and (max-width: 850px){
@@ -680,6 +769,16 @@ footer .right .icon{
         border-right: 0px;
     }
     
+    #info{
+        text-align: center;
+        padding-left: 0;
+    }
+    
+    #info .notification-box{
+        text-align: left;
+        margin: 0 auto;
+    }
+    
     #info #contain{
         width: 100%;
         margin: 0 auto;
@@ -712,5 +811,20 @@ footer .right .icon{
     .notification{
         margin: 0 auto;
         width: 80%;
+    }
+    
+    footer{
+        margin-bottom: 5em;
+    }
+}
+
+@media screen and (max-width: 550px){
+    #info .notification-box{
+        width: 80%;
+    }   
+
+    .club .btn:after { 
+        content:"\A"; 
+        white-space:pre; 
     }
 }

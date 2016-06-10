@@ -60,23 +60,39 @@
                         %h1
                             %i.fa.fa-fw.fa-folder-open
                             BROWSE CLUBS
-                    #info
+                    #info.browse
                         -@clubs.each do |club|
                             .club-box
-                                %a.full{:href => "/dashboard/club/#{club.name}"}
                                 .center
                                     .img{:style => "background-image: url(#{club.img})"}
                                     %h1
                                         =club.name
                                     %p
                                         =club.description
-                                    %a.btn{:href => "/dashboard/club/#{club.name}"}
-                                        VIEW
+                                    -if clubincludesuser?(club)
+                                        %a.btn
+                                            JOINED
+                                        %p.subtitle
+                                            %a{:href => "/dashboard/club/#{club.name}"}
+                                                View 
+                                            the club
+                                    -else
+                                        %a.btn.btn-empty{:href => "/join/#{club.name}"}
+                                            JOIN
+                                        %p.subtitle
+                                            or
+                                            %a{:href => "/dashboard/club/#{club.name}"}
+                                                view
+                                            the club
                     %footer
                         .left
-                            Made with
-                            %i.fa.fa-heart
-                            in Andover
+                            %p
+                                Made with 
+                                %i.fa.fa-heart
+                                in 
+                                %a{:href => "https://www.andover.edu", :target => "_blank"}
+                                    Andover
                         .right
-                            %a{:href => "mailto:jshen@andover.edu"}
-                                CONTACT
+                            -$footer.each do |link|
+                                %a{:href => link[:path]}
+                                    =link[:text]

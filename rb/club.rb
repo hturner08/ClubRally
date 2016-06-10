@@ -19,10 +19,13 @@ get "/addboard/:club/:member" do
                 head.notification_id += 1
                 head.save
             end
-            #send notification to member that they've been added to board
+            new_board = User.find_by(email: params[:member])
+            new_board.notifications.push({:type => "plus", :title => "Board updated", :description => "You've been added to board of #{club.name}", :id => new_board.notification_id})
+            new_board.notification_id += 1
+            new_board.save
             redirect "/dashboard/club/#{params[:club]}"
         else
-            redirect "/404"
+            redirect "/dashboard/home"
         end
     else
         redirect "/404"

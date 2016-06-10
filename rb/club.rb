@@ -7,9 +7,9 @@ def clubincludesuser? (club)
 end
 
 get "/addboard/:club/:member" do
-    if params[:club].head.include? session[:username] and Club.all.exists?(:name => params[:club]) and User.all.exists?(:email => params[:member])
+    if Club.all.exists?(:name => params[:club]) and User.all.exists?(:email => params[:member])
         club = Club.find_by(name: params[:club])
-        if club.members.include? params[:member] and club.board.include? session[:username] == false and    club.head.include? session[:username] == false
+        if club.head.include? session[:username] and club.members.include? params[:member] and club.board.include? params[:member] == false and club.head.include? params[:member] == false
             club.board << params[:member]
             club.members.delete(params[:member])
             club.save
@@ -19,6 +19,7 @@ get "/addboard/:club/:member" do
                 head.notification_id += 1
                 head.save
             end
+            #send notification to member that they've been added to board
             redirect "/dashboard/club/#{params[:club]}"
         else
             redirect "/404"

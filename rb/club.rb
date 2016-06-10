@@ -79,21 +79,13 @@ get "/join/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        if clubincludesuser? == false
-            club.members << session[:username]
-            club.save
-            club.head.each do |email|
-                head = User.find_by(email: email)
-                head.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => head.notification_id})
-                head.notification_id += 1
-                head.save
-            end
-            club.board.each do |email|
-                board = User.find_by(email: email)
-                board.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => board.notification_id})
-                board.notification_id += 1
-                board.save
-            end
+        club.members << session[:username]
+        club.save
+        club.head.each do |email|
+            head = User.find_by(email: email)
+            head.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => head.notification_id})
+            head.notification_id += 1
+            head.save
         end
         redirect "/dashboard/home"
     else

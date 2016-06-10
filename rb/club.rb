@@ -9,7 +9,7 @@ end
 get "/addboard/:club/:member" do
     if Club.all.exists?(:name => params[:club]) and User.all.exists?(:email => params[:member])
         club = Club.find_by(name: params[:club])
-        if club.head.include? session[:username] and club.members.include? params[:member] and club.board.include? params[:member] == false and club.head.include? params[:member] == false
+        if club.head.include?(session[:username]) and club.members.include?(params[:member]) and !club.board.include?(params[:member]) and !club.head.include?(params[:member])
             club.board << params[:member]
             club.members.delete(params[:member])
             club.save
@@ -25,7 +25,7 @@ get "/addboard/:club/:member" do
             new_board.save
             redirect "/dashboard/club/#{params[:club]}"
         else
-            redirect "/dashboard/home"
+            redirect "/404"
         end
     else
         redirect "/404"

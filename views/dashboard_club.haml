@@ -6,6 +6,7 @@
         %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
         %title
             Dashboard
+            ="| #{@club.name}"
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/swal/dist/sweetalert.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
@@ -31,6 +32,15 @@
                 -if @club.members.length == 0
                     %p.frown
                         Your club needs to have members before you can add a board
+        #confirm{:hidden => ""}
+            %i.fa.fa-times{:onclick => "canceldelete()"}
+            .center
+                %h1
+                    Wait!
+                %p 
+                    Are you sure you want to delete your club? 
+                %a.btn.red{:href => "/delete/#{@club.name}"}
+                    DELETE CLUB
         #wrapper
             %nav
                 .left
@@ -82,14 +92,14 @@
                             =params[:club]
                     #info.club
                         %h1
-                            Meeting Time:
+                            Tagged: 
                         %p
-                            =@club.meetingtime
+                            =@club.tag
                         %br
                         %h1
-                            Meeting Location:
+                            Meetings:
                         %p
-                            =@club.location
+                            ="#{@club.meetingtime}, in #{@club.location}"
                         %br
                         %h1
                             Head:
@@ -130,7 +140,7 @@
                                 MAIL CLUB
                             %a.btn.green{:href => "/edit/#{@club.name}"}
                                 EDIT CLUB
-                            %a.btn.red{:href => "/delete/#{@club.name}"}
+                            %a.btn.red{:onclick => "deleteclub()"}
                                 DELETE CLUB
                         -elsif @club.members.include? session[:username]
                             %a.btn.red{:href => "/leave/#{@club.name}"}

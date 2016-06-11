@@ -5,7 +5,7 @@
         %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
         %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
         %title
-            Dashboard
+            Dashboard | Create a Club
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
@@ -62,13 +62,25 @@
                             CREATE A CLUB
                     #info
                         %form#createclub{:action => "/createclub", :method => "post"}
+                            %p
+                                About:
                             %input.text{:type => "text", :name => "name", :placeholder => "Club name"}
                             %br
                             %input.text{:type => "text", :name => "description", :placeholder => "Short description"}
                             %br
                             %input.text{:type => "text", :name => "img", :placeholder => "Club Image Url"}
                             %br
-                            %select{:name => "weekday"}
+                            %select{:name => "tags"}
+                                %option{:selected => "", :disable => ""}
+                                    Club Category:
+                                -$categories.each do |option|
+                                    %option{:value => option[:name]}
+                                        =option[:name]
+                                %option{:value => "Other"}
+                                    Other
+                            %p
+                                Meetings:
+                            %select.text-medium{:name => "weekday"}
                                 %option{:value => "Sunday"}
                                     Sunday
                                 %option{:value => "Monday"}
@@ -119,7 +131,7 @@
                                 %option{:value => "10:00pm"}
                                     10:00pm
                             %br
-                            %input.text{:type => "text", :name => "location", :placeholder => "Meeting Location"}
+                            %input.text{:type => "text", :name => "location", :placeholder => "Location"}
                             %br
                             %input.btn{:type => "submit", :value => "CREATE"}
                     %footer

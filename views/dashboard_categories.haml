@@ -5,7 +5,8 @@
         %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
         %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
         %title
-            Dashboard | Feed
+            Dashboard
+            ="| #{@category[:name]}"
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
@@ -21,7 +22,7 @@
                     .contain
                         %form{:action => "/dashboard/search", :method => "get"}
                             %span.fa.fa-fw.fa-search
-                            %input{:type => "text", :name => "search", :value => params[:search]}
+                            %input{:type => "text", :name => "search"}
             #body
                 #sidebar
                     .opt
@@ -31,14 +32,14 @@
                             .color
                         .right
                             MY CLUBS
-                    .opt
+                    .opt.active
                         %a{:href => "/dashboard/browse"}
                         .left
                             %i.fa.fa-folder-open.fa-fw
                             .color
                         .right
                             BROWSE CLUBS
-                    .opt.active
+                    .opt
                         %a{:href => "/dashboard/notifications"}
                         .left
                             %i.fa.fa-newspaper-o.fa-fw
@@ -58,24 +59,39 @@
                     #color-strip
                     %header
                         %h1
-                            %i.fa.fa-fw.fa-newspaper-o
-                            FEED
-                    #info.feed
-                        -@user.notifications.each do |alert|     
-                            .notification-box
-                                %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
-                                .text
-                                    %h1
-                                        =alert[:title]
-                                    %p
-                                        =alert[:description]
-                                -if alert[:type] != "clock-o"
-                                    %a{:href => "/delete/notification/#{alert[:id]}"}
-                                        %i.fa.fa-fw.fa-times
-                        -if @user.notifications.empty?
+                            %i.fa.fa-fw{:class => "fa-#{@category[:icon]}"}
+                            =@category[:name]
+                    #info.browse
+                        -if @clubs.length == 0
                             %h1.frown
-                                No notifications right now
+                                ="There are currently no '#{@category[:name]}' clubs"
                                 %i.fa.fa-frown-o
+                        -else
+                            %h1
+                                ="Showing #{@category[:name]} clubs:"
+                            -@clubs.each do |club|
+                                .club-box
+                                    .center
+                                        .img{:style => "background-image: url(#{club.img})"}
+                                        %h1
+                                            =club.name
+                                        %p
+                                            =club.description
+                                        -if clubincludesuser?(club)
+                                            %a.btn
+                                                JOINED
+                                            %p.subtitle
+                                                %a{:href => "/dashboard/club/#{club.name}"}
+                                                    View 
+                                                the club
+                                        -else
+                                            %a.btn.btn-empty{:href => "/join/#{club.name}"}
+                                                JOIN
+                                            %p.subtitle
+                                                or
+                                                %a{:href => "/dashboard/club/#{club.name}"}
+                                                    view
+                                                the club
                     %footer
                         .left
                             %p

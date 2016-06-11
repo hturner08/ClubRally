@@ -94,7 +94,7 @@ get "/dashboard/search" do
     query = params[:search].downcase
     @clubs = []
     Club.all.each do |club|
-        all_data = "#{club.name} #{club.description}"
+        all_data = "#{club.name} #{club.description} #{club.tag}"
         if all_data.downcase.include? query
             @clubs.push(club)
         end
@@ -128,6 +128,7 @@ def dbinit
             t.string :members, array: true
             t.string :meetingtime
             t.string :location
+            t.string :tag
         end
     end
 end

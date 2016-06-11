@@ -5,7 +5,7 @@
         %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
         %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
         %title
-            Dashboard
+            Dashboard | Search
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
@@ -63,7 +63,7 @@
                     #info
                         -if @clubs.length == 0
                             %h1.frown
-                                There were no clubs found for the search
+                                There were no results found for the search
                                 ="'#{params[:search]}'."
                                 %i.fa.fa-frown-o
                                     

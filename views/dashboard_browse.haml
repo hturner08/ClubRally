@@ -5,7 +5,7 @@
         %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
         %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
         %title
-            Dashboard
+            Dashboard | Browse
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
@@ -61,6 +61,20 @@
                             %i.fa.fa-fw.fa-folder-open
                             BROWSE CLUBS
                     #info.browse
+                        %h1
+                            Categories:
+                        -$categories.each do |category|
+                            .category{:style => "background-image: url(/graphics/categories/#{category[:img]})"}
+                                %a{:href => "/dashboard/category/#{category[:name]}"}
+                                .overlay
+                                .center
+                                    %i.fa.fa-fw{:class => "fa-#{category[:icon]}"}
+                                    %h1
+                                        =category[:name]
+                        %br
+                        %br
+                        %h1
+                            Browse:
                         -@clubs.each do |club|
                             .club-box
                                 .center

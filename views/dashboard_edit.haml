@@ -5,7 +5,7 @@
         %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
         %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
         %title
-            Dashboard
+            Dashboard | Edit
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
@@ -71,8 +71,16 @@
                                 Club Image:
                             %input.text{:type => "text", :name => "img", :value => @club.img}
                             %p
+                                Club Category:
+                            %select#tag{:name => "tags", "data-tag" => @club.tag}
+                                -$categories.each do |option|
+                                    %option{:value => option[:name]}
+                                        =option[:name]
+                                %option{:value => "Other"}
+                                    Other
+                            %p
                                 Meeting Time:
-                            %select#day{:name => "weekday", "data-day" => @club.meetingtime.split(',')[0]}
+                            %select.text-medium#day{:name => "weekday", "data-day" => @club.meetingtime.split(',')[0]}
                                 %option{:value => "Sunday"}
                                     Sunday
                                 %option{:value => "Monday"}

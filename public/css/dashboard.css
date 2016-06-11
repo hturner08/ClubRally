@@ -249,6 +249,7 @@ span.fa-search{
     padding-top: 3em;
     margin-bottom: 5em;
     padding-left: 3em;
+    padding-right: 3em;
     box-sizing: border-box;
 }
 
@@ -307,10 +308,10 @@ span.fa-search{
 
 .club-box{
     border: 1px solid #b9b9b9;
-    width: 18em;
-    height: 22em;
+    width: 17em;
+    height: 21em;
     position: relative;
-    margin-left: 1em;
+    margin-right: 1em;
     margin-bottom: 1em;
     text-align: center;
     padding-left: 0.7em;
@@ -318,6 +319,10 @@ span.fa-search{
     box-sizing: border-box;
     vertical-align: text-top;
     display: inline-block;
+}
+
+.browse h1{
+    margin-bottom: 0.25em;
 }
 
 .club-box h1{
@@ -438,7 +443,7 @@ span.fa-search{
     margin: 0 auto 0.5em;
 }
 
-.club-box .btn, .club .btn{
+.club-box .btn, .club .btn, #confirm .btn{
     padding: 0.75em 2em 0.75em 2em;
     background-color: #22A7F0;
     color: #fff;
@@ -446,8 +451,9 @@ span.fa-search{
     font-family: montserrat;
 }
 
-.club .btn{
+.club .btn, #confirm .btn{
     line-height: 3em;
+    cursor: pointer;
 }
 
 .club-box .btn-empty{
@@ -460,11 +466,11 @@ span.fa-search{
     margin-bottom: 0.5em;
 }
 
-.club .btn:hover{
+.club .btn:hover, #confirm .btn:hover{
     color: #fff;
 }
 
-.club .btn{
+.club .btn, #confirm .btn{
     margin-right: 0.2em;
 }
 
@@ -472,7 +478,7 @@ span.fa-search{
     background-color: #26C281;
 }
 
-.club .red{
+.club .red, #confirm .red{
     background-color: #E06B6C;
 }
 
@@ -523,8 +529,8 @@ span.fa-search{
 }
 
 #createclub select{
-    width: 65%;
     height: 3em;
+    width: 100%;
     font-size: 0.9em;
     color: #6c6c6c;
     font-family: sourcesanspro;
@@ -536,6 +542,10 @@ span.fa-search{
     appearance: none;
     background-color: #fff;
     padding-left: 1em;
+}
+
+#createclub .text-medium{
+    width: 65%;
 }
 
 #createclub .text-small{
@@ -566,9 +576,8 @@ span.fa-search{
     height: 100vh;
 }
 
-#popup{
+#popup, #confirm{
     width: 35vw;
-    height: 75vh;
     border: 1px solid #6c6c6c;
     z-index: 100;
     position: absolute;
@@ -580,11 +589,26 @@ span.fa-search{
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 5px;
+}
+
+#popup{
+    height: 75vh;
     padding: 1.2em 1.5em 0 1.5em;
     overflow: hidden;
 }
 
-#popup h1{
+#confirm{
+    height: 15em;
+    text-align: center;
+}
+
+#confirm p{
+    margin-top: 0.2em;
+    font-family: sourcesanspro;
+    color: #6c6c6c;
+}
+
+#popup h1, #confirm h1{
     margin: 0;
     font-family: montserrat;
     font-size: 1.2em;
@@ -595,7 +619,7 @@ span.fa-search{
     border-top: 1px solid #464646;
 }
 
-#popup .fa-times{
+#popup .fa-times, #confirm .fa-times{
     cursor: pointer;
     color: #b9b9b9;
     position: absolute;
@@ -643,6 +667,55 @@ span.fa-search{
 
 .fa-heart{
     color: #c0392b;
+}
+
+.category{
+    width: 11em;
+    height: 11em;
+    display: inline-block;
+    margin-right: -3px;
+    box-sizing: border-box;
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: text-top;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    margin-bottom: 1px;
+}
+
+.category .overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 90;
+    background-color: #000;
+}
+
+.category a{
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.category .fa{
+    font-size: 2em;
+}
+
+.category .center{
+    z-index: 95;
+}
+
+.category .center h1{
+    color: #b9b9b9;
 }
 
 footer{
@@ -715,6 +788,16 @@ footer .right a{
 
 }
 
+@media screen and (max-width: 1000px){
+    #popup, #confirm{
+        width: 50vw;
+    }
+    
+    #popup .members{
+        width: calc(50vw + 15px);
+    }
+}
+
 @media screen and (max-width: 850px){
     #sidebar{
         width: 4.5em;
@@ -772,6 +855,7 @@ footer .right a{
     #info{
         text-align: center;
         padding-left: 0;
+        padding-right: 0;
     }
     
     #info .notification-box{
@@ -815,6 +899,14 @@ footer .right a{
     
     footer{
         margin-bottom: 5em;
+    }
+    
+    #popup, #confirm{
+        width: 80vw;
+    }
+    
+    #popup .members{
+        width: calc(80vw + 15px);
     }
 }
 

@@ -6,6 +6,24 @@ def clubincludesuser? (club)
     end
 end
 
+$categories = [{:name => "STEM", :icon => "flask", :img => "stem.jpeg"}, {:name => "Politics and Debate", :icon => "balance-scale", :img => "publicspeaking.jpg"}, {:name => "Art", :icon => "paint-brush", :img => "art.jpeg"}, {:name => "Non Sibi", :icon => "hand-peace-o", :img => "nonsibi.jpg"}, {:name => "Publications", :icon => "file-text", :img => "books.jpeg"}, {:name => "Athletics", :icon => "futbol-o", :img => "athletics.jpeg"}, {:name => "Music", :icon => "music", :img => 
+"music.jpeg"}]
+
+get "/dashboard/category/:category" do
+    $path = "/dashboard/category/#{params[:category]}"
+    protected!
+    startup
+    #if category exists
+    if $categories.any? {|h| h[:name] == params[:category]}
+        @category = $categories.find {|h| h[:name] == params[:category] }
+        @clubs = Club.where(tag: params[:category])
+        puts "category: #{@category}"
+        partial :dashboard_categories, :layout => false
+    else
+        redirect "/404"
+    end
+end
+
 get "/addboard/:club/:member" do
     if Club.all.exists?(:name => params[:club]) and User.all.exists?(:email => params[:member])
         club = Club.find_by(name: params[:club])
@@ -40,7 +58,7 @@ get "/dashboard/createclub" do
 end
 
 post "/createclub" do
-    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location])
+    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags])
     redirect "/dashboard/home"
 end
 
@@ -50,6 +68,7 @@ post "/editclub" do
     club.img = params[:img]
     club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
     club.location = params[:location]
+    club.tag = params[:tags]
     club.save
     redirect "/dashboard/home"
 end

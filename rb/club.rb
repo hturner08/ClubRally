@@ -58,7 +58,14 @@ get "/dashboard/createclub" do
 end
 
 post "/createclub" do
-    Club.create(:name => params[:name], :description => params[:description], :img => params[:img], :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags])
+    @filename = params[:img][:filename]
+    file = params[:img][:tempfile]
+
+    File.open("./public/upload/#{@filename}", 'wb') do |f|
+        f.write(file.read)
+    end
+    
+    Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags])
     redirect "/dashboard/home"
 end
 

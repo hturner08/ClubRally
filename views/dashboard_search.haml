@@ -72,7 +72,7 @@
                                 -if club.members.include? session[:username] or club.head.include? session[:username]
                                     %a.full{:href => "/dashboard/club/#{club.name}"}
                                 .center
-                                    .img{:style => "background-image: url(#{club.img})"}
+                                    .img{:style => "background-image: url(/upload/#{club.img})"}
                                     %h1
                                         =club.name
                                     %p

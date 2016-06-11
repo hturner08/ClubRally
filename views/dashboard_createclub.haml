@@ -61,14 +61,12 @@
                             %i.fa.fa-fw.fa-plus
                             CREATE A CLUB
                     #info
-                        %form#createclub{:action => "/createclub", :method => "post"}
+                        %form#createclub{:action => "/createclub", :method => "post", :enctype => "multipart/form-data"}
                             %p
                                 About:
                             %input.text{:type => "text", :name => "name", :placeholder => "Club name"}
                             %br
                             %input.text{:type => "text", :name => "description", :placeholder => "Short description"}
-                            %br
-                            %input.text{:type => "text", :name => "img", :placeholder => "Club Image Url"}
                             %br
                             %select{:name => "tags"}
                                 %option{:selected => "", :disable => ""}
@@ -78,6 +76,11 @@
                                         =option[:name]
                                 %option{:value => "Other"}
                                     Other
+                            %p
+                                Upload a club photo:
+                            %input{:type => "file", :name => "img", :accept => "image/gif, image/jpeg, image/png, image/jpg"}
+                            /%input.text{:type => "text", :name => "img", :placeholder => "Club Image Url"}
+                            %br
                             %p
                                 Meetings:
                             %select.text-medium{:name => "weekday"}

@@ -1,6 +1,6 @@
 function addBoard(){
     $("#popup").show();
-    $("#overlay").show();
+    
 }
 
 function deleteclub(){
@@ -8,14 +8,16 @@ function deleteclub(){
     $("#overlay").show();
 }
 
-function canceldelete(){
+function closepopup(){
     $("#confirm").hide();
     $("#overlay").hide();
+    $("#editimage").hide();
+    $("#popup").hide();
 }
 
-function closeBoard(){
-    $("#popup").hide();
-    $("#overlay").hide();
+function openpopup(whichpopup){
+    $("#overlay").show();
+    $("#" + whichpopup).show();
 }
 
 $( document ).ready(function() {

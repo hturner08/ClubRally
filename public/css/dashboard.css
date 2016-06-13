@@ -443,7 +443,7 @@ span.fa-search{
     margin: 0 auto 0.5em;
 }
 
-.club-box .btn, .club .btn, #confirm .btn{
+.club-box .btn, #confirm .btn{
     padding: 0.75em 2em 0.75em 2em;
     background-color: #22A7F0;
     color: #fff;
@@ -451,7 +451,7 @@ span.fa-search{
     font-family: montserrat;
 }
 
-.club .btn, #confirm .btn{
+#confirm .btn{
     line-height: 3em;
     cursor: pointer;
 }
@@ -466,19 +466,95 @@ span.fa-search{
     margin-bottom: 0.5em;
 }
 
-.club .btn:hover, #confirm .btn:hover{
-    color: #fff;
-}
-
-.club .btn, #confirm .btn{
+#confirm .btn{
     margin-right: 0.2em;
 }
 
-.club .green{
-    background-color: #26C281;
+/*
+    CLUB OVERHEAD
+*/
+
+#overhead{
+    width: 100%;
+    border-bottom: 1px solid #D2D0C5;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 }
 
-.club .red, #confirm .red{
+#overhead .img{
+    width: 3em;
+    height: 3em;
+    border-radius: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#overhead .img:hover .overlay{
+    visibility: visible;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    background-color: #000;
+}
+
+#overhead .img .overlay{
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    opacity: 0.75;
+    color: #fff;
+    visibility: hidden;
+    border-radius: 100%;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    text-align: center;
+    cursor: pointer;
+}
+
+#overhead .text{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 0.7em;
+    padding-top: 0.3em;
+}
+
+#overhead .buttons{
+    position: absolute;
+    top: calc(0.3em + 5px);
+    right: 0;
+}
+
+#overhead .btn{
+    color: #464646;
+    font-family: montserrat;
+    font-size: 1em;
+    border: 2px solid #6c6c6c;
+    border-radius: 100%;
+    padding: 5px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+#overhead .btn-long{
+    border-radius: 1em;
+    color: #464646;
+    padding: 5px 12px 5px 12px;
+    font-family: montserrat;
+    font-size: 1em;
+    border: 2px solid #6c6c6c;
+}
+
+#confirm .red{
     background-color: #E06B6C;
 }
 
@@ -514,7 +590,7 @@ span.fa-search{
     color: #f2f2f2;
 }
 
-#createclub .btn{
+#createclub .btn, #editimage .btn{
     width: 100%;
     border-radius: 0px;
     height: 3em;
@@ -526,6 +602,10 @@ span.fa-search{
     margin-top: 0.5em;
     box-sizing: border-box;
     cursor: pointer;
+}
+
+#editimage .btn{
+    width: 10em;
 }
 
 #createclub select{
@@ -565,6 +645,10 @@ span.fa-search{
     margin-left: -1px;
 }
 
+/*
+    Popups
+*/
+
 #overlay{
     z-index: 100;
     opacity: 0.6;
@@ -576,7 +660,7 @@ span.fa-search{
     height: 100vh;
 }
 
-#popup, #confirm{
+#popup, #confirm, #editimage{
     width: 35vw;
     border: 1px solid #6c6c6c;
     z-index: 100;
@@ -602,24 +686,29 @@ span.fa-search{
     text-align: center;
 }
 
+#editimage{
+    height: 12em;
+    padding: 1.2em 1.5em 0 1.5em;
+}
+
 #confirm p{
     margin-top: 0.2em;
     font-family: sourcesanspro;
     color: #6c6c6c;
 }
 
-#popup h1, #confirm h1{
+#popup h1, #confirm h1, #editimage h1{
     margin: 0;
     font-family: montserrat;
     font-size: 1.2em;
     color: #464646;
 }
 
-#popup hr{
+#popup hr, #editimage hr{
     border-top: 1px solid #464646;
 }
 
-#popup .fa-times, #confirm .fa-times{
+#popup .fa-times, #confirm .fa-times, #editimage .fa-times{
     cursor: pointer;
     color: #b9b9b9;
     position: absolute;
@@ -883,10 +972,6 @@ footer .right a{
         padding-left: 0;
     }
     
-    .club .btn{
-        padding: 0.75em 1em 0.75em 1em;
-    }
-    
     .linebreak{
         display: block;
         margin-bottom: 1.7em;
@@ -914,9 +999,4 @@ footer .right a{
     #info .notification-box{
         width: 80%;
     }   
-
-    .club .btn:after { 
-        content:"\A"; 
-        white-space:pre; 
-    }
 }

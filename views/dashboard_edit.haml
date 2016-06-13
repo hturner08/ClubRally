@@ -58,20 +58,16 @@
                     #color-strip
                     %header
                         %h1
-                            %i.fa.fa-fw.fa-pencil
-                            EDIT 
+                            Edit 
                             =@club.name
                     #info
                         %form#createclub{:action => "/editclub", :method => "post"}
                             %input.text{:type => "text", :name => "name", :value => @club.name, :hidden => ""}
                             %p
-                                Club Description:
+                                Description:
                             %input.text{:type => "text", :name => "description", :value => @club.description}
                             %p
-                                Club Image:
-                            %input.text{:type => "text", :name => "img", :value => @club.img}
-                            %p
-                                Club Category:
+                                Category:
                             %select#tag{:name => "tags", "data-tag" => @club.tag}
                                 -$categories.each do |option|
                                     %option{:value => option[:name]}
@@ -79,7 +75,7 @@
                                 %option{:value => "Other"}
                                     Other
                             %p
-                                Meeting Time:
+                                Meetings:
                             %select.text-medium#day{:name => "weekday", "data-day" => @club.meetingtime.split(',')[0]}
                                 %option{:value => "Sunday"}
                                     Sunday
@@ -130,8 +126,6 @@
                                     9:00pm
                                 %option{:value => "10:00pm"}
                                     10:00pm
-                            %p
-                                Meeting Location:
                             %input.text{:type => "text", :name => "location", :value => @club.location}
                             %input.btn{:type => "submit", :value => "SAVE CHANGES"}
                     %footer

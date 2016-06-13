@@ -55,14 +55,6 @@ get "/dashboard/browse" do
     partial :dashboard_browse, :layout => false
 end
 
-get "/verify" do
-    if login? 
-        redirect $path
-    end
-    
-    partial :verify, :layout => false
-end
-
 get "/debug/dbinit" do 
     dbinit
     redirect "/"

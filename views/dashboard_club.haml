@@ -18,7 +18,7 @@
         #popup{:hidden => ""}
             %h1
                 Add Board Member
-            %i.fa.fa-times{:onclick => "closeBoard()"}
+            %i.fa.fa-times{:onclick => "closepopup()"}
             %hr
             .members
                 -@club.members.each do |member|
@@ -33,7 +33,7 @@
                     %p.frown
                         Your club needs to have members before you can add a board
         #confirm{:hidden => ""}
-            %i.fa.fa-times{:onclick => "canceldelete()"}
+            %i.fa.fa-times{:onclick => "closepopup()"}
             .center
                 %h1
                     Wait!
@@ -41,6 +41,16 @@
                     Are you sure you want to delete your club? 
                 %a.btn.red{:href => "/delete/#{@club.name}"}
                     DELETE CLUB
+        #editimage{:hidden => ""}
+            %h1 
+                Change Club Picture
+            %i.fa.fa-times{:onclick => "closepopup()"}
+            %hr
+            %form{:action => "/updateimage", :method => "post", :enctype => "multipart/form-data"}
+                %input{:type => "text", :name => "club", :value => @club.name, :hidden => ""}
+                %input{:type => "file", :name => "img", :accept => "image/gif, image/jpeg, image/png, image/jpg"}
+                %br
+                %input.btn{:type => "submit", :value => "Submit"}
         #wrapper
             %nav
                 .left
@@ -91,11 +101,33 @@
                         %h1
                             =params[:club]
                     #info.club
-                        %h1
-                            Tagged: 
-                        %p
-                            =@club.tag
-                        %br
+                        #overhead
+                            .img{:style => "background-image: url(/upload/#{@club.img})"}
+                                -if @club.head.include? session[:username]
+                                    .overlay{:onclick => "openpopup('editimage')"}
+                                        .center
+                                            %i.fa.fa-pencil
+                            .text
+                                %h1
+                                    =@club.name
+                                %p
+                                    ="#{@club.description} • #{@club.tag}"
+                            .buttons
+                                - if @club.head.include?(session[:username]) or @club.board.include?(session[:username])
+                                    %a.btn-long{:href => @list}
+                                        %i.fa-fw.fa.fa-envelope
+                                        SEND MAIL
+                                - if @club.head.include?(session[:username])
+                                    %a.btn{:href => "/edit/#{@club.name}"}
+                                        %i.fa.fa-fw.fa-pencil
+                                    %a.btn{:onclick => "openpopup('confirm')"}
+                                        %i.fa.fa-fw.fa-trash
+                                - if @club.members.include?(session[:username]) or @club.board.include?(session[:username])
+                                    %a.btn-long{:href => "/leave/#{@club.name}"}
+                                        LEAVE CLUB
+                                - if !clubincludesuser?(@club)
+                                    %a.btn-long{:href => "/join/#{@club.name}"}
+                                        JOIN CLUB
                         %h1
                             Meetings:
                         %p
@@ -107,6 +139,10 @@
                             -@club.head.each do |head|
                                 %a{:href => "mailto:#{head}"}
                                     =head
+                                    %br
+                            -if @club.head.include? session[:username]
+                                %a.add
+                                    + Add Co-Head or Transfer Ownership
                         %br
                         %h1
                             Board
@@ -121,7 +157,7 @@
                                         =board
                                     %br
                             -if @club.head.include? session[:username]
-                                %a.add{:onclick => "addBoard()"}
+                                %a.add{:onclick => "openpopup('popup')"}
                                     + Add Board Member
                         %br
                         %h1
@@ -135,19 +171,6 @@
                                     %a{:href => "mailto:#{member}"}
                                         =member
                                     %br
-                        -if @club.head.include? session[:username]
-                            %a.btn{:href => @list}
-                                MAIL CLUB
-                            %a.btn.green{:href => "/edit/#{@club.name}"}
-                                EDIT CLUB
-                            %a.btn.red{:onclick => "deleteclub()"}
-                                DELETE CLUB
-                        -elsif @club.members.include? session[:username]
-                            %a.btn.red{:href => "/leave/#{@club.name}"}
-                                LEAVE CLUB
-                        -else
-                            %a.btn{:href => "/join/#{@club.name}"}
-                                JOIN CLUB
                     %footer
                         .left
                             %p

@@ -69,15 +69,27 @@ post "/createclub" do
     redirect "/dashboard/home"
 end
 
+post "/updateimage" do
+    @filename = params[:img][:filename]
+    file = params[:img][:tempfile]
+
+    File.open("./public/upload/#{@filename}", 'wb') do |f|
+        f.write(file.read)
+    end
+    club = Club.find_by(name: params[:club])
+    club.img = @filename
+    club.save
+    redirect "/dashboard/club/#{params[:club]}"
+end
+
 post "/editclub" do
     club = Club.find_by(name: params[:name])
     club.description = params[:description]
-    club.img = params[:img]
     club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
     club.location = params[:location]
     club.tag = params[:tags]
     club.save
-    redirect "/dashboard/home"
+    redirect "/dashboard/club/#{params[:name]}"
 end
 
 get "/dashboard/club/:club" do
@@ -86,17 +98,19 @@ get "/dashboard/club/:club" do
     startup
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
-        people = "&cc="
+        people = ""
         @club.members.each do |member|
             people << "#{member};"
         end
         @club.board.each do |member|
-            people << "#{member};"
+            people << "#{member};" unless member == session[:username]
         end
-        @list = "mailto:#{session[:username]}?subject=#{@club.name}"
-        if @club.members.length > 0
-            @list << people
+        @club.head.each do |member|
+            people << "#{member};" unless member == session[:username]
         end
+        
+        people = people[0...-1]
+        @list = "mailto:#{people}?subject=#{@club.name}"
         
         partial :dashboard_club, :layout => false
     else

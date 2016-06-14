@@ -5,6 +5,9 @@ require 'active_record'
 require 'bcrypt'
 require 'rest_client'
 require 'securerandom'
+
+configure { set :server, :puma }
+
 require './db/config.rb'
 require './user.rb'
 require './rb/auth.rb'

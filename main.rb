@@ -5,15 +5,13 @@ require 'active_record'
 require 'bcrypt'
 require 'rest_client'
 require 'securerandom'
-
-configure { set :server, :puma }
-
 require './db/config.rb'
 require './user.rb'
 require './rb/auth.rb'
 require './rb/feed.rb'
 require './rb/club.rb'
 
+configure { set :server, :puma }
 enable :sessions
 
 $footer = [{:path => "/terms", :text => "TERMS OF SERVICE"}, {:path => "https://docs.google.com/forms/d/1mtfMw_Ok2Wxs8SiRH8poPpYui1emb-YeGUjkG6voIwM/viewform", :text => "REPORT A BUG"}, {:path => "mailto:jshen@andover.edu", :text => "CONTACT"}]

@@ -399,6 +399,10 @@ span.fa-search{
     margin-right: 0.75em;
 }
 
+.fa-clock-o, .fa-user, .notification-box .fa-plus, .notification-box .fa-sign-out, .fa-thumbs-up, .fa-thumbs-down{
+    background-color: #84C7FD;
+}
+
 .notification-box .fa-times{
     color: #6c6c6c;
     font-size: 1em;
@@ -409,7 +413,7 @@ span.fa-search{
     margin: 0;
 }
 
-.fa-clock-o{
+/*.fa-clock-o{
     background-color: #84C7FD;
 }
 
@@ -423,7 +427,7 @@ span.fa-search{
 
 .notification-box .fa-sign-out{
     background-color: #FD797B;
-}
+}*/
 
 .notification-box .text{
     padding-top: 1.25em;
@@ -993,6 +997,37 @@ footer .right a{
     #popup .members{
         width: calc(80vw + 15px);
     }
+
+    #overhead{
+        display: block;
+        padding-bottom: 2em;
+    }
+
+    #overhead .img{
+        margin: 0 auto 0.5em;
+        width: 10em;
+        height: 10em;
+    }
+
+    #overhead .img .overlay{
+        top: -5%;
+        left: -5%;
+        width: 110%;
+        height: 110%;
+    }
+
+    #overhead .img .overlay .fa{
+        font-size: 1.5em;
+    }
+
+    #overhead .text{
+        padding: 0;
+    }
+
+    #overhead .buttons{
+        position: relative;
+    }
+
 }
 
 @media screen and (max-width: 550px){

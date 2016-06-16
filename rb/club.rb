@@ -6,6 +6,10 @@ def clubincludesuser? (club)
     end
 end
 
+def approved? (club)
+    return club.approved
+end
+
 $categories = [{:name => "STEM", :icon => "flask", :img => "stem.jpeg"}, {:name => "Politics and Debate", :icon => "balance-scale", :img => "publicspeaking.jpg"}, {:name => "Art", :icon => "paint-brush", :img => "art.jpeg"}, {:name => "Non Sibi", :icon => "hand-peace-o", :img => "nonsibi.jpg"}, {:name => "Publications", :icon => "file-text", :img => "books.jpeg"}, {:name => "Athletics", :icon => "futbol-o", :img => "athletics.jpeg"}, {:name => "Music", :icon => "music", :img => 
 "music.jpeg"}]
 
@@ -16,7 +20,7 @@ get "/dashboard/category/:category" do
     #if category exists
     if $categories.any? {|h| h[:name] == params[:category]}
         @category = $categories.find {|h| h[:name] == params[:category] }
-        @clubs = Club.where(tag: params[:category])
+        @clubs = Club.where(:tag => params[:category], :approved => true)
         puts "category: #{@category}"
         partial :dashboard_categories, :layout => false
     else
@@ -27,20 +31,16 @@ end
 get "/addboard/:club/:member" do
     if Club.all.exists?(:name => params[:club]) and User.all.exists?(:email => params[:member])
         club = Club.find_by(name: params[:club])
-        if club.head.include?(session[:username]) and club.members.include?(params[:member]) and !club.board.include?(params[:member]) and !club.head.include?(params[:member])
+        if club.head.include?(session[:username]) and club.members.include?(params[:member]) and !club.board.include?(params[:member]) and !club.head.include?(params[:member]) and approved?(club)
             club.board << params[:member]
             club.members.delete(params[:member])
             club.save
             club.head.each do |email|
                 head = User.find_by(email: email)
-                head.notifications.push({:type => "plus", :title => "Board updated", :description => "#{params[:member]} added to board of #{club.name}", :id => head.notification_id})
-                head.notification_id += 1
-                head.save
+                send_notification(head, "plus", "Board updated", "#{params[:member]} added to board of #{club.name}")
             end
             new_board = User.find_by(email: params[:member])
-            new_board.notifications.push({:type => "plus", :title => "Board updated", :description => "You've been added to board of #{club.name}", :id => new_board.notification_id})
-            new_board.notification_id += 1
-            new_board.save
+            send_notification(new_board, "plus", "Board updated", "You've been added to board of #{club.name}")
             redirect "/dashboard/club/#{params[:club]}"
         else
             redirect "/404"
@@ -65,7 +65,11 @@ post "/createclub" do
         f.write(file.read)
     end
     
-    Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags])
+    Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false)
+
+    Admin.all.each do |admin|
+        send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name]}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name]}")
+    end
     redirect "/dashboard/home"
 end
 
@@ -98,21 +102,25 @@ get "/dashboard/club/:club" do
     startup
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
-        people = ""
-        @club.members.each do |member|
-            people << "#{member};"
-        end
-        @club.board.each do |member|
-            people << "#{member};" unless member == session[:username]
-        end
-        @club.head.each do |member|
-            people << "#{member};" unless member == session[:username]
-        end
+        if approved?(@club)
+            people = ""
+            @club.members.each do |member|
+                people << "#{member};"
+            end
+            @club.board.each do |member|
+                people << "#{member};" unless member == session[:username]
+            end
+            @club.head.each do |member|
+                people << "#{member};" unless member == session[:username]
+            end
         
-        people = people[0...-1]
-        @list = "mailto:#{people}?subject=#{@club.name}"
+            people = people[0...-1]
+            @list = "mailto:#{people}?subject=#{@club.name}"
         
-        partial :dashboard_club, :layout => false
+            partial :dashboard_club, :layout => false
+        else
+            redirect "/404"
+        end
     else
         redirect "/404"
     end
@@ -123,15 +131,21 @@ get "/join/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        club.members << session[:username]
-        club.save
-        club.head.each do |email|
-            head = User.find_by(email: email)
-            head.notifications.push({:type => "user", :title => "New Member", :description => "#{session[:username]} joined #{club.name}", :id => head.notification_id})
-            head.notification_id += 1
-            head.save
+        if approved?(club)
+            club.members << session[:username]
+            club.save
+            club.head.each do |email|
+                head = User.find_by(email: email)
+                send_notification(head, "user", "New Member", "#{session[:username]} joined #{club.name}")
+            end
+            club.board.each do |email|
+                board = User.find_by(email: email)
+                send_notification(board, "user", "New Member", "#{session[:username]} joined #{club.name}")
+            end
+            redirect "/dashboard/home"
+        else
+            redirect "/404"
         end
-        redirect "/dashboard/home"
     else
         redirect "/404"
     end
@@ -142,21 +156,21 @@ get "/leave/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        club.members.delete(session[:username])
-        club.save
-        club.head.each do |email|
-            head = User.find_by(email: email)
-            head.notifications.push({:type => "sign-out", :title => "Member Left", :description => "#{session[:username]} left #{club.name}", :id => head.notification_id})
-            head.notification_id += 1
-            head.save
+        if approved?(club)
+            club.members.delete(session[:username])
+            club.save
+            club.head.each do |email|
+                head = User.find_by(email: email)
+                send_notification(head, "sign-out", "Member left", "#{session[:username]} left #{club.name}")
+            end
+            club.board.each do |email|
+                board = User.find_by(email: email)
+                send_notification(board, "sign-out", "Member left", "#{session[:username]} left #{club.name}")
+            end
+            redirect "/dashboard/home"
+        else
+            redirect "/404"
         end
-        club.board.each do |email|
-            board = User.find_by(email: email)
-            board.notifications.push({:type => "sign-out", :title => "Member Left", :description => "#{session[:username]} left #{club.name}", :id => board.notification_id})
-            board.notification_id += 1
-            board.save
-        end
-        redirect "/dashboard/home"
     else
         redirect "/404"
     end
@@ -168,7 +182,7 @@ get "/delete/:club" do
     user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        if club.head.include? user
+        if approved?(club) and club.head.include? user
             Club.where(name: params[:club]).destroy_all
         else
             redirect "/404"
@@ -185,8 +199,47 @@ get "/edit/:club" do
     user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
-        if @club.head.include? user
+        if approved?(@club) and @club.head.include? user
             partial :dashboard_edit, :layout => false
+        else
+            redirect "/404"
+        end
+    else
+        redirect "/404"
+    end
+end
+
+get "/approve/:club" do
+    if Admin.all.exists?(:email => session[:username]) and Club.all.exists?(:name => params[:club])
+        club = Club.find_by(name: params[:club])
+        if club.approved == false
+            club.approved = true
+            club.save
+
+            club.head.each do |email|
+                head = User.find_by(email: email)
+                send_notification(head, "thumbs-up", "Approved!", "Your request to create #{club.name} has been approved")
+                send_mail(email, "Approved!", "Your request to create #{club.name} has been approved")
+            end
+        end
+        redirect "/dashboard/home"
+    else
+        redirect "/404"
+    end
+end
+
+get "/dapprove/:club" do
+    if Admin.all.exists?(:email => session[:username]) and Club.all.exists?(:name => params[:club])
+        club = Club.find_by(name: params[:club])
+        unless club.approved == true
+            Club.where(name: params[:club]).destroy_all
+            club.head.each do |email|
+                head = User.find_by(email: email)
+                send_notification(head, "thumbs-down", "Denied request", "Unfortunately, your request to create #{club.name} has been denied")
+                send_mail(email, "Denied request", "Unfortunately, your request to create #{club.name} has been denied")
+            end
+
+            redirect "/dashboard/home"
         else
             redirect "/404"
         end

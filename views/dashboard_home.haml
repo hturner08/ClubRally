@@ -76,8 +76,12 @@
                                                 Board Member
                                             -else
                                                 Member
-                                        %a.btn{:href => "/dashboard/club/#{club.name}"}
-                                            VIEW
+                                        -if approved?(club)
+                                            %a.btn{:href => "/dashboard/club/#{club.name}"}
+                                                VIEW
+                                        -else
+                                            %a.btn
+                                                AWAITING APPROVAL
                             -if @clubs.length == 0
                                 %h1.frown
                                     You have no clubs. Join some!

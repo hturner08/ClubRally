@@ -15,6 +15,21 @@ enable :sessions
 
 $footer = [{:path => "/terms", :text => "TERMS OF SERVICE"}, {:path => "https://docs.google.com/forms/d/1mtfMw_Ok2Wxs8SiRH8poPpYui1emb-YeGUjkG6voIwM/viewform", :text => "REPORT A BUG"}, {:path => "mailto:jshen@andover.edu", :text => "CONTACT"}]
 
+def startup
+    @user = User.find_by(email: session[:username])
+    time = Time.new
+    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    Club.all.each do |club|
+        if clubincludesuser?(club)
+            @user.notifications.delete_if { |h| h[:title] == club.name}
+            clubday = days.index(club.meetingtime.split(',')[0])
+            if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0))
+                send_notification(@user, "clock-o", club.name, "#{club.meetingtime}, #{club.location}")
+            end
+        end
+    end
+end
+
 get "/" do 
     if login? 
         startup
@@ -51,17 +66,13 @@ get "/dashboard/browse" do
     $path = "/dashboard/browse"
     protected!
     startup
-    @clubs = Club.all
+    @clubs = Club.where(:approved => true)
     partial :dashboard_browse, :layout => false
 end
 
+#debug
 get "/debug/dbinit" do 
     dbinit
-    redirect "/"
-end
-
-get "/debug/mail" do
-    send_simple_message
     redirect "/"
 end
 
@@ -87,7 +98,7 @@ get "/dashboard/search" do
     @clubs = []
     Club.all.each do |club|
         all_data = "#{club.name} #{club.description} #{club.tag}"
-        if all_data.downcase.include? query
+        if approved?(club) and all_data.downcase.include? query
             @clubs.push(club)
         end
     end
@@ -102,6 +113,9 @@ def dbinit
         if Club.table_exists?
             drop_table :clubs
         end 
+        if Admin.table_exists?
+            drop_table :admins
+        end
         create_table :users do |t|
             t.string :email
             t.string :salt
@@ -121,6 +135,16 @@ def dbinit
             t.string :meetingtime
             t.string :location
             t.string :tag
+            t.boolean :approved
         end
+        create_table :admins do |t|
+            t.string :email
+        end
+        Admin.create(:email => "jshen@andover.edu")
+        #Admin.create(:email => "jshen1@andover.edu")
+        #Admin.create(:email => "ali2@andover.edu")
+        #Admin.create(:email => "scdavis@andover.edu")
+        #Admin.create(:email => "hturner@andover.edu")
+        #Admin.create(:email => "awang1@andover.edu")
     end
 end

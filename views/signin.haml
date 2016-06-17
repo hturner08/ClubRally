@@ -21,13 +21,11 @@
                     %input.text{:type => "text", :name => "email", :placeholder => "Email"}
                     %br
                     %input.text{:type => "password", :name => "password", :placeholder => "Password"}
-                    -if $error != nil
-                        %br
+                    %br
+                    - if flash[:error]
                         .error
                             %p
-                                =$error
-                    -if $error == nil
-                        %br
+                                =flash[:error]
                     .forgot 
                         %span
                             %input#rememberme{:type => "checkbox", :value => "1", :checked => "checked", :name => "remember"}

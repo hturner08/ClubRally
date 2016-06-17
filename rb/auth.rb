@@ -1,6 +1,4 @@
 $path = "/dashboard/home"
-$error = nil
-$register_error = nil
 
 helpers do
   
@@ -62,10 +60,10 @@ end
 
 post "/secureregister" do
     if User.all.exists?(:email => params[:email])
-        $register_error = "That email is already in use."
+        flash[:error] = "That email is already in use."
         redirect "/register"
     elsif not params[:email].include? "@" or params[:email].slice(params[:email].index("@")..-1) != "@andover.edu"
-        $register_error = "Enter an Andover email"
+        flash[:error] = "Enter an Andover email"
         redirect "/register"
     else
         password_salt = BCrypt::Engine.generate_salt
@@ -73,7 +71,6 @@ post "/secureregister" do
         verify = "#{params[:email]}#{SecureRandom.hex}"
         @user = User.create(:salt => password_salt, :passwordhash => password_hash, :email => params[:email], :verified => false, :verification_code => verify, :notifications => [], :notification_id => 1)
         send_mail(params[:email], "Verify your email address", "Thank you for signing up for Club Rally. Go to http://clubrally.herokuapp.com/verify/#{verify} to activate your account")
-        $register_error = nil
         partial :verify, :layout => false
     end
 end
@@ -83,21 +80,20 @@ post "/secureauth" do
         user = User.find_by(email: params[:email])
         puts "Verified: #{user.verified}"
         if not verified?(user)
-            $error = "Verify your email"
+            flash[:error] = "Verify your email"
             redirect "/login"
         else
             if user.passwordhash == BCrypt::Engine.hash_secret(params[:password], user.salt)
                 session[:username] = params[:email]
                 session.options[:expire_after] = 2592000 unless params['remember'].nil?
-                $error = nil
                 redirect $path
             else
-                $error = "That password is incorrect."
+                flash[:error] = "That password is incorrect."
                 redirect "/login"
             end
         end
     else
-        $error = "That email isn't registered."
+        flash[:error] = "That email isn't registered"
         redirect "/login"
     end
 end

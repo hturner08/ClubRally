@@ -10,6 +10,14 @@ def approved? (club)
     return club.approved
 end
 
+def illegal_characters?(string)
+    if string.include?("/") or string.include?("[") or string.include?("]")
+        return true
+    else
+        return false
+    end
+end
+
 $categories = [{:name => "STEM", :icon => "flask", :img => "stem.jpeg"}, {:name => "Politics and Debate", :icon => "balance-scale", :img => "publicspeaking.jpg"}, {:name => "Art", :icon => "paint-brush", :img => "art.jpeg"}, {:name => "Non Sibi", :icon => "hand-peace-o", :img => "nonsibi.jpg"}, {:name => "Publications", :icon => "file-text", :img => "books.jpeg"}, {:name => "Athletics", :icon => "futbol-o", :img => "athletics.jpeg"}, {:name => "Music", :icon => "music", :img => 
 "music.jpeg"}]
 
@@ -58,42 +66,75 @@ get "/dashboard/createclub" do
 end
 
 post "/createclub" do
-    @filename = params[:img][:filename]
-    file = params[:img][:tempfile]
 
-    File.open("./public/upload/#{@filename}", 'wb') do |f|
-        f.write(file.read)
-    end
+    if params[:name].length > 45
+        flash[:error] = "Name of your club is too long"
+        redirect "/dashboard/createclub"
+    elsif params[:description].length > 55
+        flash[:error] = "Your club description is too long"
+        redirect "/dashboard/createclub"
+    elsif params[:name].length == 0 or params[:description].length == 0 or params[:tags] == "Club Category:" or params[:location].length == 0
+        flash[:error] = "Please fill out all fields"
+        redirect "/dashboard/createclub"
+    elsif illegal_characters?(params[:name])
+        flash[:error] = "The name of your club cannot contain '/', '[', or ']'"
+        redirect "/dashboard/createclub"
+    elsif Club.all.exists?(:name => params[:name])
+        flash[:error] = "A club with that name already exists"
+        redirect "/dashboard/createclub"
+    else
+        if params[:img].blank?
+            Club.create(:name => params[:name], :description => params[:description], :img => "/default/default.png", :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false)
+        else
+            @filename = params[:img][:filename]
+            file = params[:img][:tempfile]
+
+            File.open("./public/upload/#{@filename}", 'wb') do |f|
+                f.write(file.read)
+            end
     
-    Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false)
+            Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false)
+        end
 
-    Admin.all.each do |admin|
-        send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name]}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name]}")
+        Admin.all.each do |admin|
+            send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name]}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name]}")
+        end
+        redirect "/dashboard/home"
     end
-    redirect "/dashboard/home"
+
 end
 
 post "/updateimage" do
-    @filename = params[:img][:filename]
-    file = params[:img][:tempfile]
+    if !params[:img].blank?
+        @filename = params[:img][:filename]
+        file = params[:img][:tempfile]
 
-    File.open("./public/upload/#{@filename}", 'wb') do |f|
-        f.write(file.read)
+        File.open("./public/upload/#{@filename}", 'wb') do |f|
+            f.write(file.read)
+        end
+        club = Club.find_by(name: params[:club])
+        club.img = @filename
+        club.save
     end
-    club = Club.find_by(name: params[:club])
-    club.img = @filename
-    club.save
     redirect "/dashboard/club/#{params[:club]}"
 end
 
 post "/editclub" do
-    club = Club.find_by(name: params[:name])
-    club.description = params[:description]
-    club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
-    club.location = params[:location]
-    club.tag = params[:tags]
-    club.save
-    redirect "/dashboard/club/#{params[:name]}"
+    if params[:description].length > 55
+        flash[:error] = "Your club description is too long"
+        redirect "/edit/#{params[:name]}"
+    elsif params[:description].length == 0 or params[:location].length == 0
+        flash[:error] = "Please fill out all fields"
+        redirect "/edit/#{params[:name]}"
+    else
+        club = Club.find_by(name: params[:name])
+        club.description = params[:description]
+        club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
+        club.location = params[:location]
+        club.tag = params[:tags]
+        club.save
+        redirect "/dashboard/club/#{params[:name]}"
+    end
 end
 
 get "/dashboard/club/:club" do
@@ -131,7 +172,7 @@ get "/join/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        if approved?(club)
+        if approved?(club) and !club.members.include?(session[:username])
             club.members << session[:username]
             club.save
             club.head.each do |email|
@@ -156,7 +197,7 @@ get "/leave/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        if approved?(club)
+        if approved?(club) and club.members.include?(session[:username])
             club.members.delete(session[:username])
             club.save
             club.head.each do |email|

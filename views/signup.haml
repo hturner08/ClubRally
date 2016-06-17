@@ -21,13 +21,11 @@
                     %input.text{:type => "text", :name => "email", :placeholder => "Email"}
                     %br
                     %input.text{:type => "password", :name => "password", :placeholder => "Password"}
-                    -if $register_error != nil
-                        %br
+                    %br
+                    - if flash[:error]
                         .error
                             %p
-                                =$register_error
-                    -if $register_error == nil
-                        %br
+                                =flash[:error]
                     .terms 
                         By signing up, you agree to the 
                         %a{:href => "/terms"}

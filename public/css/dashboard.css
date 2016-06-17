@@ -579,21 +579,6 @@ span.fa-search{
     margin-bottom: 0.2em;
 }
 
-
-#createclub .error{
-    margin: 0 auto;
-    text-align: center;
-    background-color: #E06B6C;
-    height: 2.7em;
-    width: 100%;
-}
-
-#createclub .error p{
-    font-size: 1em;
-    line-height: 2.7em;
-    color: #f2f2f2;
-}
-
 #createclub .btn, #editimage .btn{
     width: 100%;
     border-radius: 0px;
@@ -647,6 +632,20 @@ span.fa-search{
     box-sizing: border-box;
     margin-bottom: 0.2em;
     margin-left: -1px;
+}
+
+#createclub .error{
+    background-color: #E06B6C;
+    width: calc(100% - 1px);
+    margin: 0 auto;
+    height: 2.7em;
+    text-align: center;
+}
+
+#createclub .error p{
+    font-family: sourcesanspro;
+    line-height: 2.7em;
+    color: #f2f2f2;
 }
 
 /*

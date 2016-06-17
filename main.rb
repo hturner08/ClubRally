@@ -5,6 +5,7 @@ require 'active_record'
 require 'bcrypt'
 require 'rest-client'
 require 'securerandom'
+require 'sinatra/flash'
 require './db/config.rb'
 require './user.rb'
 require './rb/auth.rb'
@@ -35,8 +36,6 @@ get "/" do
         startup
         redirect "/dashboard/home"
     else
-        $error = nil
-        $register_error = nil
         partial :index, :layout => false
     end
 end

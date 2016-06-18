@@ -119,6 +119,31 @@ post "/updateimage" do
     redirect "/dashboard/club/#{params[:club]}"
 end
 
+post "/updateheads" do
+    puts params[:coheads].length
+    if params[:coheads].length == 0
+        flash[:error] = "You need to have at least one co-head"
+        redirect "/dashboard/club/#{params[:club]}"
+    elsif params[:coheads].length > 2
+        flash[:error] = "You can only have 2 co-heads"
+        redirect "/dashboard/club/#{params[:club]}"
+    else
+        club = Club.find_by(name: params[:club])
+        club.head.each do |member|
+            if !params[:coheads].include?(member)
+                send_notification(User.find_by(:name => member), "frown", "Co-heads updated", "You are no longer a co-head for #{club.name}")
+            end
+        end
+        club.head.clear
+        params[:coheads].each do |member|
+            club.head << member
+            send_notification(User.find_by(:name => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}")
+        end
+        club.save
+        redirect "/dashboard/club/#{params[:club]}"
+    end
+end
+
 post "/editclub" do
     if params[:description].length > 55
         flash[:error] = "Your club description is too long"

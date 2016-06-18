@@ -267,6 +267,11 @@ span.fa-search{
     margin-top: 0.5em;
 }
 
+#createclub a{
+    color: #6EBAEE;
+    text-decoration: none;
+}
+
 .club{
     padding-left: 10%;
 }
@@ -579,7 +584,7 @@ span.fa-search{
     margin-bottom: 0.2em;
 }
 
-#createclub .btn, #editimage .btn{
+#createclub .btn, #editimage .btn, #addhead .btn{
     width: 100%;
     border-radius: 0px;
     height: 3em;
@@ -593,7 +598,7 @@ span.fa-search{
     cursor: pointer;
 }
 
-#editimage .btn{
+#editimage .btn, #addhead .btn{
     width: 10em;
 }
 
@@ -634,7 +639,7 @@ span.fa-search{
     margin-left: -1px;
 }
 
-#createclub .error{
+#createclub .error, #addhead .error{
     background-color: #E06B6C;
     width: calc(100% - 1px);
     margin: 0 auto;
@@ -642,10 +647,15 @@ span.fa-search{
     text-align: center;
 }
 
-#createclub .error p{
+#createclub .error p, #addhead .error p{
     font-family: sourcesanspro;
     line-height: 2.7em;
     color: #f2f2f2;
+}
+
+#addhead .error{
+    margin-top: -0.5em;
+    margin-bottom: 0.5em;
 }
 
 /*
@@ -663,7 +673,7 @@ span.fa-search{
     height: 100vh;
 }
 
-#popup, #confirm, #editimage{
+#popup, #confirm, #editimage, #addhead{
     width: 35vw;
     border: 1px solid #6c6c6c;
     z-index: 100;
@@ -678,7 +688,7 @@ span.fa-search{
     border-radius: 5px;
 }
 
-#popup{
+#popup, #addhead{
     height: 75vh;
     padding: 1.2em 1.5em 0 1.5em;
     overflow: hidden;
@@ -700,18 +710,18 @@ span.fa-search{
     color: #6c6c6c;
 }
 
-#popup h1, #confirm h1, #editimage h1{
+#popup h1, #confirm h1, #editimage h1, #addhead h1{
     margin: 0;
     font-family: montserrat;
     font-size: 1.2em;
     color: #464646;
 }
 
-#popup hr, #editimage hr{
+#popup hr, #editimage hr, #addhead hr{
     border-top: 1px solid #464646;
 }
 
-#popup .fa-times, #confirm .fa-times, #editimage .fa-times{
+#popup .fa-times, #confirm .fa-times, #editimage .fa-times, #addhead .fa-times{
     cursor: pointer;
     color: #b9b9b9;
     position: absolute;
@@ -719,7 +729,7 @@ span.fa-search{
     top: 1.2em;
 }
 
-#popup .members{
+#popup .members, #addhead .members{
     overflow-y: scroll;
     height: 90%;
     padding-left: 1.5em;
@@ -755,6 +765,15 @@ span.fa-search{
 
 #popup .members hr{
     border-top: 1px solid #b9b9b9;
+}
+
+#addhead form{
+    font-family: montserrat;
+    color: #464646;
+}
+
+#addhead .checkbox{
+    margin-right: 1em;
 }
 
 .fa-heart{

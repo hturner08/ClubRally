@@ -13,6 +13,7 @@ function closepopup(){
     $("#overlay").hide();
     $("#editimage").hide();
     $("#popup").hide();
+    $("#addhead").hide();
 }
 
 function openpopup(whichpopup){

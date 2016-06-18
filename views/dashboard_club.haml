@@ -51,6 +51,37 @@
                 %input{:type => "file", :name => "img", :accept => "image/gif, image/jpeg, image/png, image/jpg"}
                 %br
                 %input.btn{:type => "submit", :value => "Submit"}
+        #addhead{:hidden => ""}
+            %h1
+                Add Co-Head or Transfer Ownership
+            %i.fa.fa-times{:onclick => "closepopup()"}
+            %hr
+            -if flash[:error]
+                .error
+                    %p
+                        =flash[:error]
+            .members
+                -if @club.head.length == 1 and @club.members.length == 0 and @club.board.length == 0
+                    %p.frown
+                        Your club needs to have members before you can add a co-head
+                -else
+                    %p.frown
+                        Select co-heads:
+                    %form{:action => "/updateheads", :method => "post"}
+                        %input{:type => "text", :name => "club", :value => @club.name, :hidden => ""}
+                        -@club.head.each do |member|
+                            %input.checkbox{:type => "checkbox", :checked => "checked", :name => "coheads[]", :value => member}
+                            =member
+                            %br
+                        -@club.board.each do |member|
+                            %input.checkbox{:type => "checkbox", :name => "coheads[]", :value => member}
+                            =member
+                            %br
+                        -@club.members.each do |member|
+                            %input.checkbox{:type => "checkbox", :name => "coheads[]", :value => member}
+                            =member
+                            %br
+                        %input.btn{:type => "submit", :value => "Save Changes"}
         #wrapper
             %nav
                 .left
@@ -141,7 +172,7 @@
                                     =head
                                     %br
                             -if @club.head.include? session[:username]
-                                %a.add
+                                %a.add{:onclick => "openpopup('addhead')"}
                                     + Add Co-Head or Transfer Ownership
                         %br
                         %h1

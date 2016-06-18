@@ -44,6 +44,10 @@ get "/terms" do
     partial :terms, :layout => false
 end
 
+get "/guidelines" do
+    partial :guidelines, :layout => false
+end
+
 get "/forgot" do
     partial :wip, :layout => false
 end

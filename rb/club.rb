@@ -19,7 +19,7 @@ def illegal_characters?(string)
 end
 
 $categories = [{:name => "STEM", :icon => "flask", :img => "stem.jpeg"}, {:name => "Politics and Debate", :icon => "balance-scale", :img => "publicspeaking.jpg"}, {:name => "Art", :icon => "paint-brush", :img => "art.jpeg"}, {:name => "Non Sibi", :icon => "hand-peace-o", :img => "nonsibi.jpg"}, {:name => "Publications", :icon => "file-text", :img => "books.jpeg"}, {:name => "Athletics", :icon => "futbol-o", :img => "athletics.jpeg"}, {:name => "Music", :icon => "music", :img => 
-"music.jpeg"}]
+"music.jpeg"}, {:name => "Academics", :icon => "graduation-cap", :img => "academics.jpeg"}]
 
 get "/dashboard/category/:category" do
     $path = "/dashboard/category/#{params[:category]}"
@@ -123,10 +123,10 @@ post "/updateheads" do
     puts params[:coheads].length
     if params[:coheads].length == 0
         flash[:error] = "You need to have at least one co-head"
-        redirect "/dashboard/club/#{params[:club]}"
+        redirect "/dashboard/club/#{params[:club]}?hidden=false"
     elsif params[:coheads].length > 2
         flash[:error] = "You can only have 2 co-heads"
-        redirect "/dashboard/club/#{params[:club]}"
+        redirect "/dashboard/club/#{params[:club]}?hidden=false"
     else
         club = Club.find_by(name: params[:club])
         club.head.each do |member|

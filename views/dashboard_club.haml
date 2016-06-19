@@ -51,7 +51,7 @@
                 %input{:type => "file", :name => "img", :accept => "image/gif, image/jpeg, image/png, image/jpg"}
                 %br
                 %input.btn{:type => "submit", :value => "Submit"}
-        #addhead{:hidden => params[:hidden]}
+        #addhead{:hidden => "#{params[:hidden]}"}
             %h1
                 Add Co-Head or Transfer Ownership
             %i.fa.fa-times{:onclick => "closepopup()"}

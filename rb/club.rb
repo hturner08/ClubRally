@@ -97,7 +97,7 @@ post "/createclub" do
         end
 
         Admin.all.each do |admin|
-            send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name]}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name]}")
+            send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name].gsub!(' ','%20')}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name].gsub!(' ','%20')}")
         end
         redirect "/dashboard/home"
     end

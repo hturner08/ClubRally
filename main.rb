@@ -24,7 +24,7 @@ def startup
         if clubincludesuser?(club)
             @user.notifications.delete_if { |h| h[:title] == club.name}
             clubday = days.index(club.meetingtime.split(',')[0])
-            if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0))
+            if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0)) and !club.nomeeting
                 send_notification(@user, "clock-o", club.name, "#{club.meetingtime}, #{club.location}")
             end
         end
@@ -139,6 +139,7 @@ def dbinit
             t.string :location
             t.string :tag
             t.boolean :approved
+            t.boolean :nomeeting
         end
         create_table :admins do |t|
             t.string :email

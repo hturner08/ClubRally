@@ -570,6 +570,12 @@ span.fa-search{
 #createclub{
     text-align: left;
     width: 30em;
+    font-family: montserrat;
+    color: #464646;
+}
+
+#createclub span{
+    line-height: 2em;
 }
 
 #createclub .text{
@@ -656,6 +662,10 @@ span.fa-search{
 #addhead .error{
     margin-top: -0.5em;
     margin-bottom: 0.5em;
+}
+
+#info.club .nomeeting{
+    color: #E06B6C;
 }
 
 /*
@@ -772,7 +782,7 @@ span.fa-search{
     color: #464646;
 }
 
-#addhead .checkbox{
+.checkbox{
     margin-right: 1em;
 }
 
@@ -897,6 +907,37 @@ footer .right a{
         margin-bottom: 0.1em;
     }
 
+    #overhead{
+        display: block;
+        padding-bottom: 2em;
+        text-align: center;
+    }
+
+    #overhead .img{
+        margin: 0 auto 0.5em;
+        width: 10em;
+        height: 10em;
+    }
+
+    #overhead .img .overlay{
+        top: -5%;
+        left: -5%;
+        width: 110%;
+        height: 110%;
+    }
+
+    #overhead .img .overlay .fa{
+        font-size: 1.5em;
+    }
+
+    #overhead .text{
+        padding: 0;
+    }
+
+    #overhead .buttons{
+        position: relative;
+    }
+
 }
 
 @media screen and (max-width: 1000px){
@@ -1016,35 +1057,7 @@ footer .right a{
         width: calc(80vw + 15px);
     }
 
-    #overhead{
-        display: block;
-        padding-bottom: 2em;
-    }
 
-    #overhead .img{
-        margin: 0 auto 0.5em;
-        width: 10em;
-        height: 10em;
-    }
-
-    #overhead .img .overlay{
-        top: -5%;
-        left: -5%;
-        width: 110%;
-        height: 110%;
-    }
-
-    #overhead .img .overlay .fa{
-        font-size: 1.5em;
-    }
-
-    #overhead .text{
-        padding: 0;
-    }
-
-    #overhead .buttons{
-        position: relative;
-    }
 
 }
 

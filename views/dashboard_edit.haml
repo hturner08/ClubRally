@@ -132,6 +132,11 @@
                                 %option{:value => "10:00pm"}
                                     10:00pm
                             %input.text{:type => "text", :name => "location", :value => @club.location}
+                            %br
+                            %span
+                                %input#checkbox.checkbox{:type => "checkbox", :name => "nomeeting", :value => 1, "data-checkbox" => "#{@club.nomeeting}"}
+                                No meeting this week
+                            %br
                             %input.btn{:type => "submit", :value => "SAVE CHANGES"}
                     %footer
                         .left

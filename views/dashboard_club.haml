@@ -163,6 +163,9 @@
                             Meetings:
                         %p
                             ="#{@club.meetingtime}, in #{@club.location}"
+                            -if @club.nomeeting
+                                %p.nomeeting
+                                    Not meeting this week
                         %br
                         %h1
                             Head:

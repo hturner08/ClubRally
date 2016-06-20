@@ -83,8 +83,12 @@ post "/createclub" do
         flash[:error] = "A club with that name already exists"
         redirect "/dashboard/createclub"
     else
+        nomeeting = true
+        if params[:nomeeting].nil?
+            nomeeting = false
+        end
         if params[:img].blank?
-            Club.create(:name => params[:name], :description => params[:description], :img => "/default/default.png", :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false)
+            Club.create(:name => params[:name], :description => params[:description], :img => "/default/default.png", :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting)
         else
             @filename = params[:img][:filename]
             file = params[:img][:tempfile]
@@ -93,7 +97,7 @@ post "/createclub" do
                 f.write(file.read)
             end
     
-            Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false)
+            Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting)
         end
 
         Admin.all.each do |admin|
@@ -152,11 +156,16 @@ post "/editclub" do
         flash[:error] = "Please fill out all fields"
         redirect "/edit/#{params[:name]}"
     else
+        nomeeting = true
+        if params[:nomeeting].nil?
+            nomeeting = false
+        end
         club = Club.find_by(name: params[:name])
         club.description = params[:description]
         club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
         club.location = params[:location]
         club.tag = params[:tags]
+        club.nomeeting = nomeeting
         club.save
         redirect "/dashboard/club/#{params[:name]}"
     end

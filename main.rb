@@ -16,21 +16,6 @@ enable :sessions
 
 $footer = [{:path => "/terms", :text => "TERMS OF SERVICE"}, {:path => "https://docs.google.com/forms/d/1mtfMw_Ok2Wxs8SiRH8poPpYui1emb-YeGUjkG6voIwM/viewform", :text => "REPORT A BUG"}, {:path => "mailto:jshen@andover.edu", :text => "CONTACT"}]
 
-def startup
-    @user = User.find_by(email: session[:username])
-    time = Time.new
-    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    Club.all.each do |club|
-        if clubincludesuser?(club)
-            @user.notifications.delete_if { |h| h[:title] == club.name}
-            clubday = days.index(club.meetingtime.split(',')[0])
-            if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0)) and !club.nomeeting
-                send_notification(@user, "clock-o", club.name, "#{club.meetingtime}, #{club.location}")
-            end
-        end
-    end
-end
-
 get "/" do 
     if login? 
         startup
@@ -57,10 +42,8 @@ get "/dashboard/home" do
     protected!
     startup
     @clubs = []
-    Club.all.each do |club|
-        if clubincludesuser?(club)
-            @clubs << club
-        end
+    @user.clubs.each do |club|
+        @clubs << Club.find_by(:name => club)
     end
     partial :dashboard_home, :layout => false
 end
@@ -127,6 +110,7 @@ def dbinit
             t.string :verification_code
             t.string :notifications
             t.integer :notification_id
+            t.string :clubs, array: true
         end
         create_table :clubs do |t|
             t.string :name

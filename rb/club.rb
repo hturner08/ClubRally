@@ -103,6 +103,11 @@ post "/createclub" do
         Admin.all.each do |admin|
             send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name].gsub!(' ','%20')}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name].gsub!(' ','%20')}")
         end
+
+        user = User.find_by(:email => session[:username])
+        user.clubs << params[:name]
+        user.save
+
         redirect "/dashboard/home"
     end
 
@@ -156,11 +161,18 @@ post "/editclub" do
         flash[:error] = "Please fill out all fields"
         redirect "/edit/#{params[:name]}"
     else
+        club = Club.find_by(name: params[:name])
         nomeeting = true
         if params[:nomeeting].nil?
             nomeeting = false
+        else
+            allmembers = club.head + club.board + club.members
+            allmembers.each do |member|
+                user = User.find_by(:email => member)
+                user.notifications.delete_if { |h| h[:title] == club.name}
+                user.save
+            end
         end
-        club = Club.find_by(name: params[:name])
         club.description = params[:description]
         club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
         club.location = params[:location]
@@ -217,6 +229,11 @@ get "/join/:club" do
                 board = User.find_by(email: email)
                 send_notification(board, "user", "New Member", "#{session[:username]} joined #{club.name}")
             end
+
+            user = User.find_by(email: session[:username])
+            user.clubs << params[:club]
+            user.save
+
             redirect "/dashboard/home"
         else
             redirect "/404"
@@ -242,6 +259,11 @@ get "/leave/:club" do
                 board = User.find_by(email: email)
                 send_notification(board, "sign-out", "Member left", "#{session[:username]} left #{club.name}")
             end
+
+            user = User.find_by(email: session[:username])
+            user.clubs.delete(params[:club])
+            user.save
+
             redirect "/dashboard/home"
         else
             redirect "/404"
@@ -254,10 +276,16 @@ end
 get "/delete/:club" do
     $path = "/delete/#{params[:club]}"
     protected!
-    user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        if approved?(club) and club.head.include? user
+        allmembers = club.head + club.board + club.members
+        allmembers.each do |member|
+            user = User.find_by(:email => member)
+            user.notifications.delete_if { |h| h[:title] == club.name}
+            user.clubs.delete(params[:club])
+            user.save
+        end
+        if approved?(club) and club.head.include? session[:username]
             Club.where(name: params[:club]).destroy_all
         else
             redirect "/404"

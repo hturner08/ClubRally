@@ -69,7 +69,7 @@ post "/secureregister" do
         password_salt = BCrypt::Engine.generate_salt
         password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
         verify = "#{params[:email]}#{SecureRandom.hex}"
-        @user = User.create(:salt => password_salt, :passwordhash => password_hash, :email => params[:email], :verified => false, :verification_code => verify, :notifications => [], :notification_id => 1)
+        @user = User.create(:salt => password_salt, :passwordhash => password_hash, :email => params[:email], :verified => false, :verification_code => verify, :notifications => [], :notification_id => 1, :clubs => [])
         send_mail(params[:email], "Verify your email address", "Thank you for signing up for Club Rally. Go to http://clubrally.herokuapp.com/verify/#{verify} to activate your account")
         partial :verify, :layout => false
     end

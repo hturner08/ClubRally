@@ -100,8 +100,13 @@ post "/createclub" do
             Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting)
         end
 
+        clubname = params[:name]
+        if params[:name].include?(' ')
+            clubname = params[:name].gsub!(' ','%20')
+        end
+
         Admin.all.each do |admin|
-            send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{params[:name].gsub!(' ','%20')}. If not go to http://clubrally.herokuapp.com/dapprove/#{params[:name].gsub!(' ','%20')}")
+            send_mail(admin.email, "Approve club", "Approve #{params[:name]}, created by #{session[:username]}? If so, go to http://clubrally.herokuapp.com/approve/#{clubname}. If not go to http://clubrally.herokuapp.com/dapprove/#{clubname}")
         end
 
         user = User.find_by(:email => session[:username])

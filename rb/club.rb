@@ -152,7 +152,7 @@ post "/updateheads" do
         club.head.clear
         params[:coheads].each do |member|
             club.head << member
-            send_notification(User.find_by(:email => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}", timesatmp)
+            send_notification(User.find_by(:email => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}", timestamp)
         end
         club.save
         redirect "/dashboard/club/#{params[:club]}"

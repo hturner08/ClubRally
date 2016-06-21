@@ -322,10 +322,9 @@ end
 get "/edit/:club" do
     $path = "/edit/#{params[:club]}"
     protected!
-    user = User.find_by(email: session[:username]).email
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
-        if approved?(@club) and @club.head.include? user
+        if approved?(@club) and (@club.head.include?(session[:username]) or @club.board.include?(session[:username]))
             partial :dashboard_edit, :layout => false
         else
             redirect "/404"

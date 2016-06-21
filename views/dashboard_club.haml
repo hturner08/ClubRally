@@ -188,7 +188,7 @@
                     #info.club
                         #overhead
                             .img{:style => "background-image: url(/upload/#{@club.img})"}
-                                -if @club.head.include? session[:username]
+                                -if @club.board.include?(session[:username]) or @club.head.include? session[:username]
                                     .overlay{:onclick => "openpopup('editimage')"}
                                         .center
                                             %i.fa.fa-pencil
@@ -210,6 +210,8 @@
                                 - if @club.members.include?(session[:username]) or @club.board.include?(session[:username])
                                     %a.btn-long{:href => "/leave/#{@club.name}"}
                                         LEAVE CLUB
+                                    %a.btn{:href => "/edit/#{@club.name}"}
+                                        %i.fa.fa-fw.fa-pencil
                                 - if !clubincludesuser?(@club)
                                     %a.btn-long{:href => "/join/#{@club.name}"}
                                         JOIN CLUB

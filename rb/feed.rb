@@ -1,12 +1,23 @@
+def comingup?(club)
+    time = Time.new.to_i
+    clubdate = Chronic.parse("next #{club.meetingtime.split(',')[0]} #{club.meetingtime.split(' ')[1]}").to_i
+
+    if ((clubdate - time) / 3600) < 48
+        return true
+    else
+        return false
+    end
+end
+
 def startup
     @user = User.find_by(email: session[:username])
-    time = Time.new
-    days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     @user.clubs.each do |name|
         club = Club.find_by(:name => name)
-        clubday = days.index(club.meetingtime.split(',')[0])
-        if (clubday > time.wday and clubday - 2 < time.wday) or (clubday <= 1 and (time.wday > 5 or time.wday == 0)) and !club.nomeeting and approved?(club) and !@user.notifications.any? { |h| h[:title] == name }
+        if comingup?(club) and !club.nomeeting and approved?(club) and !@user.notifications.any? { |h| h[:title] == name }
             send_notification(@user, "clock-o", club.name, "#{club.meetingtime}, #{club.location}")
+        elsif !comingup?(club) and @user.notifications.any? { |h| h[:title] == name }
+            @user.notifications.delete_if { |h| h[:title] == club.name}
+            @user.save
         end
     end
 end

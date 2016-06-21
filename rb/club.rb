@@ -248,8 +248,12 @@ get "/leave/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         club = Club.find_by(name: params[:club])
-        if approved?(club) and club.members.include?(session[:username])
-            club.members.delete(session[:username])
+        if approved?(club) and (club.members.include?(session[:username]) or club.board.include?(session[:username]))
+            if club.members.include?(session[:username])
+                club.members.delete(session[:username])
+            else
+                club.board.delete?(session[:username])
+            end
             club.save
             club.head.each do |email|
                 head = User.find_by(email: email)

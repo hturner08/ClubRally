@@ -316,8 +316,8 @@ span.fa-search{
     width: 17em;
     height: 21em;
     position: relative;
-    margin-right: 1em;
-    margin-bottom: 1em;
+    margin-right: calc(0.5em - 3px);
+    margin-bottom: 0.5em;
     text-align: center;
     padding-left: 0.7em;
     padding-right: 0.7em;

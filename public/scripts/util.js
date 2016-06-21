@@ -14,6 +14,7 @@ function closepopup(){
     $("#editimage").hide();
     $("#popup").hide();
     $("#addhead").hide();
+    $("#mail").hide();
 }
 
 function openpopup(whichpopup){

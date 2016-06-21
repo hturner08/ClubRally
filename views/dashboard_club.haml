@@ -82,6 +82,26 @@
                             =member
                             %br
                         %input.btn{:type => "submit", :value => "Save Changes"}
+        #mail{:hidden => ""}
+            %i.fa.fa-times{:onclick => "closepopup()"}
+            .center
+                -if @people.length == 0
+                    %h1
+                        Oops!
+                    %p
+                        Your club needs to have members before you can send emails
+                -else
+                    %h1
+                        Send Mail
+                    %p
+                        Use this email address:
+                        %br
+                        =@list
+                        %br
+                        or
+                    %a.btn{:href => "mailto:#{@list}"}
+                        USE DEFAULT EMAIL APP
+
         #wrapper
             %nav
                 .left
@@ -145,7 +165,7 @@
                                     ="#{@club.description} • #{@club.tag}"
                             .buttons
                                 - if @club.head.include?(session[:username]) or @club.board.include?(session[:username])
-                                    %a.btn-long{:href => @list}
+                                    %a.btn-long{:onclick => "openpopup('mail')"}
                                         %i.fa-fw.fa.fa-envelope
                                         SEND MAIL
                                 - if @club.head.include?(session[:username])

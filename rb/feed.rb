@@ -14,7 +14,6 @@ def comingup?(club)
     clubdate = get_club_time(club)
 
     if (((clubdate.to_i - time) / 3600) < 48) and (((clubdate.to_i - time) / 3600) > 0)
-        puts "hello"
         return true
     else
         return false

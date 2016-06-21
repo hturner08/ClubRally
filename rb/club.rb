@@ -184,6 +184,14 @@ post "/editclub" do
         club.tag = params[:tags]
         club.nomeeting = nomeeting
         club.save
+
+        user = User.find_by(:email => session[:username])
+        if comingup?(club) and !club.nomeeting and user.notifications.any? { |h| h[:title] == params[:name] }
+            user.notifications.delete_if { |h| h[:title] == club.name}
+            user.save
+            send_notification(user, "clock-o", club.name, "#{club.meetingtime}, #{club.location}", get_club_time(club).to_i)
+        end
+
         redirect "/dashboard/club/#{params[:name]}"
     end
 end
@@ -195,19 +203,19 @@ get "/dashboard/club/:club" do
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
         if approved?(@club)
-            people = ""
+            @people = ""
             @club.members.each do |member|
-                people << "#{member};"
+                @people << "#{member};"
             end
             @club.board.each do |member|
-                people << "#{member};" unless member == session[:username]
+                @people << "#{member};" unless member == session[:username]
             end
             @club.head.each do |member|
-                people << "#{member};" unless member == session[:username]
+                @people << "#{member};" unless member == session[:username]
             end
         
-            people = people[0...-1]
-            @list = "mailto:#{people}?subject=#{@club.name}"
+            @people = @people[0...-1]
+            @list = "#{@people}?subject=#{@club.name}"
         
             partial :dashboard_club, :layout => false
         else

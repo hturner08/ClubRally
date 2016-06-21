@@ -1,13 +1,3 @@
-#require 'active_record'
-
-#ActiveRecord::Base.logger = Logger.new(STDERR)
-
-#ActiveRecord::Base.establish_connection(
-#  :adapter => 'pg',
-#  :database =>  'mydb'
-#)
-
-
 configure :production, :development do
   db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/patch')
   pool = ENV["DB_POOL"] || ENV['MAX_THREADS'] || 1000

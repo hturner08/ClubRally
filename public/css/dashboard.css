@@ -356,46 +356,16 @@ span.fa-search{
     color: #464646;
 }
 
-
-/*.notification{
-    width: 30em;
-    position: relative;
-    height: 5.5em;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    margin-bottom: 1px;
-}*/
-
-/*.notification .fa-times{
-    color: #6c6c6c;
-    font-size: 1.5em;
-    padding-right: 0.7em;
-    line-height: 3.6666666666em;
-}*/
-
-/*.notification .ghost{
-    visibility: hidden;
-}
-
-.notification-box{
-    width: 90%;
-    height: 100%;
-    border: 1px solid #b9b9b9;
-    position: relative;
-}*/
-
 .notification-box{
     position: relative;
     width: 27em;
-    height: 5.5em;
+    height: 6em;
     border: 1px solid #b9b9b9;
 }
 
 .notification-box .fa{
     margin-left: 0.75em;
-    margin-top: 0.85em;
+    margin-top: 1.1em;
     padding: 0.5em 0.4em 0.5em 0.4em;
     font-size: 1.5em;
     border-radius: 100%;
@@ -412,27 +382,11 @@ span.fa-search{
     color: #6c6c6c;
     font-size: 1em;
     position: absolute;
-    top: 0.85em;
-    right: 0.85em;
+    top: 1.1em;
+    right: 1.1em;
     padding: 0;
     margin: 0;
 }
-
-/*.fa-clock-o{
-    background-color: #84C7FD;
-}
-
-.fa-user{
-    background-color: #FD9E6D;
-}
-
-.notification-box .fa-plus{
-    background-color: #2ECC71;
-}
-
-.notification-box .fa-sign-out{
-    background-color: #FD797B;
-}*/
 
 .notification-box .text{
     padding-top: 1.25em;
@@ -452,7 +406,7 @@ span.fa-search{
     margin: 0 auto 0.5em;
 }
 
-.club-box .btn, #confirm .btn{
+.club-box .btn, #confirm .btn, #mail .btn{
     padding: 0.75em 2em 0.75em 2em;
     background-color: #22A7F0;
     color: #fff;
@@ -460,7 +414,7 @@ span.fa-search{
     font-family: montserrat;
 }
 
-#confirm .btn{
+#confirm .btn, #mail .btn{
     line-height: 3em;
     cursor: pointer;
 }
@@ -560,7 +514,9 @@ span.fa-search{
     padding: 5px 12px 5px 12px;
     font-family: montserrat;
     font-size: 1em;
+    margin-left: 6px;
     border: 2px solid #6c6c6c;
+    cursor: pointer;
 }
 
 #confirm .red{
@@ -683,7 +639,7 @@ span.fa-search{
     height: 100vh;
 }
 
-#popup, #confirm, #editimage, #addhead{
+#popup, #confirm, #editimage, #addhead, #mail{
     width: 35vw;
     border: 1px solid #6c6c6c;
     z-index: 100;
@@ -704,7 +660,7 @@ span.fa-search{
     overflow: hidden;
 }
 
-#confirm{
+#confirm, #mail{
     height: 15em;
     text-align: center;
 }
@@ -714,13 +670,13 @@ span.fa-search{
     padding: 1.2em 1.5em 0 1.5em;
 }
 
-#confirm p{
+#confirm p, #mail p{
     margin-top: 0.2em;
     font-family: sourcesanspro;
     color: #6c6c6c;
 }
 
-#popup h1, #confirm h1, #editimage h1, #addhead h1{
+#popup h1, #confirm h1, #editimage h1, #addhead h1, #mail h1{
     margin: 0;
     font-family: montserrat;
     font-size: 1.2em;
@@ -731,7 +687,7 @@ span.fa-search{
     border-top: 1px solid #464646;
 }
 
-#popup .fa-times, #confirm .fa-times, #editimage .fa-times, #addhead .fa-times{
+#popup .fa-times, #confirm .fa-times, #editimage .fa-times, #addhead .fa-times, #mail .fa-times{
     cursor: pointer;
     color: #b9b9b9;
     position: absolute;
@@ -771,6 +727,7 @@ span.fa-search{
     padding: 0.5em;
     line-height: 1em;
     text-decoration: none;
+    margin-right: 0.5em;
 }
 
 #popup .members hr{

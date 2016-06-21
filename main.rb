@@ -68,6 +68,10 @@ get "/debug/random" do
     redirect "/"
 end
 
+get "/debug/notifications" do
+    User.find_by(:email => session[:username]).notifications
+end
+
 not_found do
     status 404
     partial :oops, :layout => false

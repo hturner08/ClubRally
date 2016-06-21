@@ -45,10 +45,10 @@ get "/addboard/:club/:member" do
             club.save
             club.head.each do |email|
                 head = User.find_by(email: email)
-                send_notification(head, "plus", "Board updated", "#{params[:member]} added to board of #{club.name}")
+                send_notification(head, "plus", "Board updated", "#{params[:member]} added to board of #{club.name}", Time.new.to_i)
             end
             new_board = User.find_by(email: params[:member])
-            send_notification(new_board, "plus", "Board updated", "You've been added to board of #{club.name}")
+            send_notification(new_board, "plus", "Board updated", "You've been added to board of #{club.name}", Time.new.to_i)
             redirect "/dashboard/club/#{params[:club]}"
         else
             redirect "/404"
@@ -140,13 +140,13 @@ post "/updateheads" do
         club = Club.find_by(name: params[:club])
         club.head.each do |member|
             if !params[:coheads].include?(member)
-                send_notification(User.find_by(:name => member), "frown", "Co-heads updated", "You are no longer a co-head for #{club.name}")
+                send_notification(User.find_by(:name => member), "frown", "Co-heads updated", "You are no longer a co-head for #{club.name}", Time.new.to_i)
             end
         end
         club.head.clear
         params[:coheads].each do |member|
             club.head << member
-            send_notification(User.find_by(:name => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}")
+            send_notification(User.find_by(:name => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}", Time.new.to_i)
         end
         club.save
         redirect "/dashboard/club/#{params[:club]}"
@@ -223,11 +223,11 @@ get "/join/:club" do
             club.save
             club.head.each do |email|
                 head = User.find_by(email: email)
-                send_notification(head, "user", "New Member", "#{session[:username]} joined #{club.name}")
+                send_notification(head, "user", "New Member", "#{session[:username]} joined #{club.name}", Time.new.to_i)
             end
             club.board.each do |email|
                 board = User.find_by(email: email)
-                send_notification(board, "user", "New Member", "#{session[:username]} joined #{club.name}")
+                send_notification(board, "user", "New Member", "#{session[:username]} joined #{club.name}", Time.new.to_i)
             end
 
             user = User.find_by(email: session[:username])
@@ -257,11 +257,11 @@ get "/leave/:club" do
             club.save
             club.head.each do |email|
                 head = User.find_by(email: email)
-                send_notification(head, "sign-out", "Member left", "#{session[:username]} left #{club.name}")
+                send_notification(head, "sign-out", "Member left", "#{session[:username]} left #{club.name}", Time.new.to_i)
             end
             club.board.each do |email|
                 board = User.find_by(email: email)
-                send_notification(board, "sign-out", "Member left", "#{session[:username]} left #{club.name}")
+                send_notification(board, "sign-out", "Member left", "#{session[:username]} left #{club.name}", Time.new.to_i)
             end
 
             user = User.find_by(email: session[:username])
@@ -325,7 +325,7 @@ get "/approve/:club" do
 
             club.head.each do |email|
                 head = User.find_by(email: email)
-                send_notification(head, "thumbs-up", "Approved!", "Your request to create #{club.name} has been approved")
+                send_notification(head, "thumbs-up", "Approved!", "Your request to create #{club.name} has been approved", Time.new.to_i)
                 send_mail(email, "Approved!", "Your request to create #{club.name} has been approved")
             end
         end
@@ -342,7 +342,7 @@ get "/dapprove/:club" do
             Club.where(name: params[:club]).destroy_all
             club.head.each do |email|
                 head = User.find_by(email: email)
-                send_notification(head, "thumbs-down", "Denied request", "Unfortunately, your request to create #{club.name} has been denied")
+                send_notification(head, "thumbs-down", "Denied request", "Unfortunately, your request to create #{club.name} has been denied", Time.new.to_i)
                 send_mail(email, "Denied request", "Unfortunately, your request to create #{club.name} has been denied")
             end
 

@@ -1,8 +1,14 @@
 def comingup?(club)
     time = Time.new.to_i
-    clubdate = Chronic.parse("next #{club.meetingtime.split(',')[0]} #{club.meetingtime.split(' ')[1]}").to_i
+    if Chronic.parse("today").wday == Chronic.parse("this #{club.meetingtime.split(',')[0]}").wday
+        clubdate = Chronic.parse("today #{club.meetingtime.split(' ')[1]}")
+        puts clubdate
+    else
+        clubdate = Chronic.parse("this #{club.meetingtime.split(',')[0]} #{club.meetingtime.split(' ')[1]}")
+    end
 
-    if ((clubdate - time) / 3600) < 48
+    if (((clubdate.to_i - time) / 3600) < 48) and (((clubdate.to_i - time) / 3600) > 0)
+        puts "hello"
         return true
     else
         return false

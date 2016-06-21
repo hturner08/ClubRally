@@ -134,7 +134,6 @@ post "/updateimage" do
 end
 
 post "/updateheads" do
-    puts params[:coheads].length
     if params[:coheads].length == 0
         flash[:error] = "You need to have at least one co-head"
         redirect "/dashboard/club/#{params[:club]}?hidden=false"
@@ -153,6 +152,11 @@ post "/updateheads" do
         params[:coheads].each do |member|
             club.head << member
             send_notification(User.find_by(:email => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}", timestamp)
+        end
+        if club.members.include?(session[:username])
+            club.members.delete(session[:username])
+        else
+            club.board.delete(session[:username])
         end
         club.save
         redirect "/dashboard/club/#{params[:club]}"

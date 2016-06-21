@@ -142,16 +142,17 @@ post "/updateheads" do
         flash[:error] = "You can only have 2 co-heads"
         redirect "/dashboard/club/#{params[:club]}?hidden=false"
     else
+        timestamp = Time.new.to_i
         club = Club.find_by(name: params[:club])
         club.head.each do |member|
             if !params[:coheads].include?(member)
-                send_notification(User.find_by(:name => member), "frown", "Co-heads updated", "You are no longer a co-head for #{club.name}", Time.new.to_i)
+                send_notification(User.find_by(:email => member), "frown", "Co-heads updated", "You are no longer a co-head for #{club.name}", timestamp)
             end
         end
         club.head.clear
         params[:coheads].each do |member|
             club.head << member
-            send_notification(User.find_by(:name => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}", Time.new.to_i)
+            send_notification(User.find_by(:email => member), "plus", "Co-heads updated", "You're now a co-head for #{club.name}", timesatmp)
         end
         club.save
         redirect "/dashboard/club/#{params[:club]}"
@@ -265,7 +266,7 @@ get "/leave/:club" do
             if club.members.include?(session[:username])
                 club.members.delete(session[:username])
             else
-                club.board.delete?(session[:username])
+                club.board.delete(session[:username])
             end
             club.save
             club.head.each do |email|

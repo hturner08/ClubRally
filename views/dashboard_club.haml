@@ -8,11 +8,9 @@
             Dashboard
             ="| #{@club.name}"
         %link{:href => "/css/dashboard.css", :type => "text/css", :rel => "stylesheet"}
-        %link{:href => "/swal/dist/sweetalert.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/icons/css/font-awesome.min.css", :type => "text/css", :rel => "stylesheet"}
         %link{:href => "/graphics/icon.png", :rel => "shortcut icon", :type => "image/png"}/
         %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"}
-        %script{:src => "/scripts/util.js"}
     %body
         -if !params[:hidden].nil?
             #overlay
@@ -273,3 +271,4 @@
                             -$footer.each do |link|
                                 %a{:href => link[:path]}
                                     =link[:text]
+    %script{:src => "/scripts/util.js"}

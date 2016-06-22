@@ -32,3 +32,9 @@ $( document ).ready(function() {
     $("#day").val(day);
     $("#checkbox").prop('checked', checkbox);
 });
+
+$(document).keyup(function(e) {
+     if (e.keyCode == 27) {
+        closepopup();
+    }
+});

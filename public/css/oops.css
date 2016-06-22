@@ -24,13 +24,18 @@ h1{
     font-size: 5em;
 }
 
-a{
+p, a{
     margin-top: 0;
     font-size: 1.2em;
+    padding: 0;
+    color: #464646;
+}
+
+a{
     color: #67809F;
-    text-decoration: none;
     -webkit-transition: 0.2s;
     transition: 0.2s;
+    text-decoration: none;
 }
 
 a:hover{

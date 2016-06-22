@@ -308,7 +308,7 @@ get "/delete/:club" do
             user.clubs.delete(params[:club])
             user.save
         end
-        if approved?(club) and club.head.include? session[:username]
+        if approved?(club) and (club.head.include?(session[:username]) or Admin.all.include?(session[:username]))
             Club.where(name: params[:club]).destroy_all
         else
             redirect "/404"
@@ -324,7 +324,7 @@ get "/edit/:club" do
     protected!
     if Club.all.exists?(:name => params[:club])
         @club = Club.find_by(name: params[:club])
-        if approved?(@club) and (@club.head.include?(session[:username]) or @club.board.include?(session[:username]))
+        if approved?(@club) and (@club.head.include?(session[:username]) or @club.board.include?(session[:username]) or Admin.all.include?(session[:username]))
             partial :dashboard_edit, :layout => false
         else
             redirect "/404"

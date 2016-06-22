@@ -200,7 +200,7 @@
                                     %a.btn-long{:onclick => "openpopup('mail')"}
                                         %i.fa-fw.fa.fa-envelope
                                         SEND MAIL
-                                - if @club.head.include?(session[:username])
+                                - if @club.head.include?(session[:username]) or Admin.all.include?(session[:username])
                                     %a.btn{:href => "/edit/#{@club.name}"}
                                         %i.fa.fa-fw.fa-pencil
                                     %a.btn{:onclick => "openpopup('confirm')"}

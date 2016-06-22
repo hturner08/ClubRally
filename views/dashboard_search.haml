@@ -60,13 +60,16 @@
                         %h1
                             %i.fa.fa-fw.fa-search
                             SEARCH
-                    #info
+                    #info.browse
                         -if @clubs.length == 0
                             %h1.frown
                                 There were no results found for the search
                                 ="'#{params[:search]}'."
                                 %i.fa.fa-frown-o
-                                    
+                        -else
+                            %h1
+                                Showing results for
+                                ="'#{params[:search]}':"
                         -@clubs.each do |club|
                             .club-box
                                 -if club.members.include? session[:username] or club.head.include? session[:username]

@@ -1,20 +1,6 @@
-function addBoard(){
-    $("#popup").show();
-    
-}
-
-function deleteclub(){
-    $("#confirm").show();
-    $("#overlay").show();
-}
-
 function closepopup(){
-    $("#confirm").hide();
     $("#overlay").hide();
-    $("#editimage").hide();
-    $("#popup").hide();
-    $("#addhead").hide();
-    $("#mail").hide();
+    $(".popup").hide();
 }
 
 function openpopup(whichpopup){

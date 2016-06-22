@@ -1,0 +1,281 @@
+#createclub{
+    text-align: left;
+    width: 30em;
+    font-family: montserrat;
+    color: #464646;
+    p{
+        margin-bottom: 0.5em;
+        margin-top: 0.5em;
+    }
+    a{
+        color: #6EBAEE;
+        text-decoration: none;
+    }
+    span{
+        line-height: 2em;
+    }
+    .text{
+        width: 100%;
+        box-sizing: border-box;
+        height: 3em;
+        border: none;
+        font-family: sourcesanspro;
+        font-size: 0.9em;
+        color: #6c6c6c;
+        padding-left: 1em;
+        margin-bottom: 0.2em;
+    }
+    select{
+        height: 3em;
+        width: 100%;
+        font-size: 0.9em;
+        color: #6c6c6c;
+        font-family: sourcesanspro;
+        margin-bottom: 0.2em;
+        border: none;
+        border-radius: 0px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: #fff;
+        padding-left: 1em;
+    }
+    .text-medium{
+        width: 65%;
+    }
+    .text-small{
+        width: 34%;
+        font-family: sourcesanspro;
+        font-size: 0.9em;
+        height: 3em;
+        border: none;
+        border-radius: 0px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        color: #6c6c6c;
+        padding-left: 1em;
+        box-sizing: border-box;
+        margin-bottom: 0.2em;
+        margin-left: -1px;
+    }
+}
+
+.club{
+    padding-left: 10%;
+    .add{
+        cursor: pointer;
+        color: #52B3D9;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        &:hover{
+            color: #4a98b7;
+        }
+    }
+    p.member{
+        margin-bottom: 0.5em;
+    }
+}
+
+#info.club .nomeeting{
+    color: #E06B6C;
+}
+
+.club h1, .notification-box h1, .frown, .browse h1{
+    font-family: montserrat;
+    color: #464646;
+    font-size: 1em;
+    margin: 0;
+}
+
+.browse h1{
+    margin-bottom: 0.25em;
+}
+
+.club, .feed{
+    p{
+        font-family: sourcesanspro;
+        color: #6c6c6c;
+        margin: 0;
+    }
+    a{
+        text-decoration: none;
+        color: #6c6c6c;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        &:hover{
+            color: #373737;
+        }
+    }
+}
+
+.club-box{
+    border: 1px solid #b9b9b9;
+    width: 17em;
+    height: 21em;
+    position: relative;
+    margin-right: calc(0.5em - 3px);
+    margin-bottom: 0.5em;
+    text-align: center;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+    box-sizing: border-box;
+    vertical-align: text-top;
+    display: inline-block;
+    h1{
+        font-family: montserrat;
+        color: #464646;
+        font-size: 1.2em;
+        word-wrap: break-word;
+        margin-bottom: 0;
+    }
+    p{
+        margin-top: 0;
+        margin-bottom: 1.5em;
+        color: #6c6c6c;
+        font-family: sourcesanspro;
+    }
+    .subtitle{
+        font-size: 0.75em;
+        margin-top: 1.25em;
+        text-decoration: none;
+    }
+    a{
+        text-decoration: none;
+        color: #464646;
+    }
+    .img{
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 10em;
+        height: 10em;
+        border-radius: 100%;
+        margin: 0 auto 0.5em;
+    }
+    .btn-empty{
+        border: 2px solid #22A7F0;
+        background-color: #F2F2F0;
+        color: #464646;
+    }
+}
+
+/*
+    CLUB OVERHEAD
+*/
+
+#overhead{
+    width: 100%;
+    border-bottom: 1px solid #D2D0C5;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    position: relative;
+    @include display(flex);
+    .img{
+        width: 3em;
+        height: 3em;
+        border-radius: 100%;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        position: relative;
+        &:hover .overlay{
+            visibility: visible;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+            background-color: #000;
+        }
+        .overlay{
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            opacity: 0.75;
+            color: #fff;
+            visibility: hidden;
+            border-radius: 100%;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+    .text{
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        padding-left: 0.7em;
+        padding-top: 0.3em;
+    }
+    .buttons{
+        position: absolute;
+        top: calc(0.3em + 5px);
+        right: 0;
+    }
+    .btn{
+        color: #464646;
+        font-family: montserrat;
+        font-size: 1em;
+        border: 2px solid #6c6c6c;
+        border-radius: 100%;
+        padding: 5px;
+        margin-left: 6px;
+        cursor: pointer;
+    }
+    .btn-long{
+        border-radius: 1em;
+        color: #464646;
+        padding: 5px 12px 5px 12px;
+        font-family: montserrat;
+        font-size: 1em;
+        margin-left: 6px;
+        border: 2px solid #6c6c6c;
+        cursor: pointer;
+    }
+}
+
+.category{
+    width: 11em;
+    height: 11em;
+    display: inline-block;
+    margin-right: -3px;
+    box-sizing: border-box;
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: text-top;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    margin-bottom: 1px;
+    .overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        z-index: 90;
+        background-color: #000;
+    }
+    a{
+        z-index: 100;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .fa{
+        font-size: 2em;
+    }
+    .center{
+        z-index: 95;
+        h1{
+            color: #b9b9b9;
+        }
+    }
+}

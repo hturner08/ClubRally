@@ -63,7 +63,7 @@
                     #info.feed
                         -@user.notifications.each do |alert|     
                             .notification-box
-                                %i.fa.fa-fw{:class => "fa-#{alert[:type]}"}
+                                %i.fa.fa-fw.notification-icon{:class => "fa-#{alert[:type]}"}
                                 .text
                                     %h1
                                         =alert[:title]

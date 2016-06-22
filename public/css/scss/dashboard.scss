@@ -1,0 +1,252 @@
+@import 'mixins';
+@import 'fonts';
+@import 'skeleton';
+@import 'nav';
+@import 'club';
+@import 'notifications';
+@import 'popups';
+@import 'footer';
+
+
+.center{
+    position: relative;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+.right{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+*:focus{
+    outline: none;
+}
+
+.join-btn{
+    z-index: 100;
+}
+
+.linebreak{
+    display: inline;
+}
+
+#createclub .btn, #editimage .btn, #addhead .btn{
+    width: 100%;
+    border-radius: 0px;
+    height: 3em;
+    background-color: #22A7F0;
+    font-size: 0.9em;
+    color: #fff;
+    border: none;
+    font-family: montserrat;
+    margin-top: 0.5em;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.club-box .btn, #confirm .btn, #mail .btn{
+    padding: 0.75em 2em 0.75em 2em;
+    background-color: #22A7F0;
+    color: #fff;
+    text-decoration: none;
+    font-family: montserrat;
+}
+
+#confirm .btn, #mail .btn{
+    line-height: 3em;
+    cursor: pointer;
+}
+
+#createclub .error, #addhead .error{
+    background-color: #E06B6C;
+    width: calc(100% - 1px);
+    margin: 0 auto;
+    height: 2.7em;
+    text-align: center;
+}
+
+#createclub .error p, #addhead .error p{
+    font-family: sourcesanspro;
+    line-height: 2.7em;
+    color: #f2f2f2;
+}
+
+@media screen and (max-width: 1100px){
+    footer{
+        display: block;
+        height: 4em;
+    }
+
+    footer .left, footer .right{
+        text-align: center;
+        padding: 0;
+    }
+
+    footer .left p{
+        padding: 0;
+        margin-bottom: 0.1em;
+    }
+
+    #overhead{
+        display: block;
+        padding-bottom: 2em;
+        text-align: center;
+    }
+
+    #overhead .img{
+        margin: 0 auto 0.5em;
+        width: 10em;
+        height: 10em;
+    }
+
+    #overhead .img .overlay{
+        top: -5%;
+        left: -5%;
+        width: 110%;
+        height: 110%;
+    }
+
+    #overhead .img .overlay .fa{
+        font-size: 1.5em;
+    }
+
+    #overhead .text{
+        padding: 0;
+    }
+
+    #overhead .buttons{
+        position: relative;
+    }
+
+}
+
+@media screen and (max-width: 1000px){
+    .popup{
+        width: 50vw;
+    }
+
+    #addboard .members, #addhead .members{
+        width: calc(50vw + 15px);
+    }
+}
+
+@media screen and (max-width: 850px){
+    #sidebar{
+        width: 4.5em;
+    }
+
+    .opt .right{
+        display: none;
+    }
+
+    .opt .left{
+        border: 0px;
+    }
+
+    #color-strip{
+        display: none;
+    }
+
+    .feed{
+        padding-left: 0;
+    }
+
+}
+
+@media screen and (max-width: 670px){
+    #content header{
+        display: none;
+    }
+
+    #body{
+        display: block;
+    }
+
+    #sidebar{
+        width: 100vw;
+        height: 4em;
+        border-bottom: 1px solid #E4E4E2;
+    }
+
+    .opt{
+        display: inline-block;
+        width: 25vw;
+        border-bottom: 0px;
+        margin-right: -0.25em;
+        border-right: 1px solid #E4E4E2;
+    }
+
+    .opt .left{
+        width: 100%;
+    }
+
+    .opt:nth-child(4){
+        border-right: 0px;
+    }
+
+    #info{
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #info .notification-box{
+        text-align: left;
+        margin: 0 auto;
+    }
+
+    #info #contain{
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .club-box{
+        margin-left: 0;
+    }
+
+    nav .left{
+        display: none;
+    }
+
+    #createclub{
+        width: 85%;
+        margin: 0 auto;
+        padding-left: 0;
+    }
+
+    .linebreak{
+        display: block;
+        margin-bottom: 1.7em;
+    }
+
+    .notification{
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    footer{
+        margin-bottom: 5em;
+    }
+
+    .popup{
+        width: 80vw;
+    }
+
+    #addboard .members, #addhead .members{
+        width: calc(80vw + 15px);
+    }
+
+
+
+}
+
+@media screen and (max-width: 550px){
+    #info .notification-box{
+        width: 80%;
+    }
+}

@@ -1,0 +1,61 @@
+nav{
+    width: 100vw;
+    height: 4em;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #373737;
+    color: #ACACAC;
+
+    a{
+        color: #ACACAC;
+        line-height: 4em;
+        text-decoration: none;
+        margin-right: 1em;
+        font-family: montserrat;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        &:hover{
+            color: #7e7d7d;
+        }
+    }
+
+    .left p{
+        font-family: montserrat;
+        font-size: 1em;
+        line-height: 2em;
+        padding-left: 2em;
+    }
+
+    .right{
+        text-align: right;
+        input{
+            width: 15em;
+            height: 2.5em;
+            border: none;
+            color: #9b9a9a;
+            margin-top: 0.75em;
+            border-radius: 5px;
+            margin-right: 1em;
+            box-sizing: border-box;
+            font-size: 1em;
+            font-family: sourcesanspro;
+            text-indent: 30px;
+        }
+    }
+}
+
+.contain{
+    position: relative;
+    width: 15em;
+    float: right;
+    margin-right: 1em;
+}
+
+span.fa-search{
+    position: absolute;
+    top: 24px;
+    left: 7px;
+    font-size: 15px;
+}

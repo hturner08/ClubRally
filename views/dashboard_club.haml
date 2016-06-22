@@ -14,7 +14,7 @@
     %body
         -if !params[:hidden].nil?
             #overlay
-            #addhead
+            #addhead.popup
                 %h1
                     Add Co-Head or Transfer Ownership
                 %i.fa.fa-times{:onclick => "closepopup()"}
@@ -47,7 +47,7 @@
                             %input.btn{:type => "submit", :value => "Save Changes"}
         -else
             #overlay{:hidden => ""}
-            #addhead{:hidden => ""}
+            #addhead.popup{:hidden => ""}
                 %h1
                     Add Co-Head or Transfer Ownership
                 %i.fa.fa-times{:onclick => "closepopup()"}
@@ -78,7 +78,7 @@
                                 =member
                                 %br
                             %input.btn{:type => "submit", :value => "Save Changes"}
-        #popup{:hidden => ""}
+        #addboard.popup{:hidden => ""}
             %h1
                 Add Board Member
             %i.fa.fa-times{:onclick => "closepopup()"}
@@ -95,7 +95,7 @@
                 -if @club.members.length == 0
                     %p.frown
                         Your club needs to have members before you can add a board
-        #confirm{:hidden => ""}
+        #confirm.popup{:hidden => ""}
             %i.fa.fa-times{:onclick => "closepopup()"}
             .center
                 %h1
@@ -104,7 +104,7 @@
                     Are you sure you want to delete your club? 
                 %a.btn.red{:href => "/delete/#{@club.name}"}
                     DELETE CLUB
-        #editimage{:hidden => ""}
+        #editimage.popup{:hidden => ""}
             %h1 
                 Change Club Picture
             %i.fa.fa-times{:onclick => "closepopup()"}
@@ -114,7 +114,7 @@
                 %input{:type => "file", :name => "img", :accept => "image/gif, image/jpeg, image/png, image/jpg"}
                 %br
                 %input.btn{:type => "submit", :value => "Submit"}
-        #mail{:hidden => ""}
+        #mail.popup{:hidden => ""}
             %i.fa.fa-times{:onclick => "closepopup()"}
             .center
                 -if @people.length == 0
@@ -245,7 +245,7 @@
                                         =board
                                     %br
                             -if @club.head.include? session[:username]
-                                %a.add{:onclick => "openpopup('popup')"}
+                                %a.add{:onclick => "openpopup('addboard')"}
                                     + Add Board Member
                         %br
                         %h1

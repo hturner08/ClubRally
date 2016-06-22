@@ -57,19 +57,8 @@ get "/dashboard/browse" do
     partial :dashboard_browse, :layout => false
 end
 
-#debug
-get "/debug/dbinit" do 
-    dbinit
-    redirect "/"
-end
-
-get "/debug/random" do
-    puts SecureRandom.hex
-    redirect "/"
-end
-
-get "/debug/notifications" do
-    User.find_by(:email => session[:username]).notifications
+error do
+    partial :servererror, :layout => false
 end
 
 not_found do
@@ -94,6 +83,12 @@ get "/dashboard/search" do
         end
     end
     partial :dashboard_search, :layout => false
+end
+
+#DB
+get "/debug/dbinit" do
+    dbinit
+    redirect "/"
 end
 
 def dbinit

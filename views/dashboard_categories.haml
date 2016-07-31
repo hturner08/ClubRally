@@ -71,27 +71,28 @@
                                 ="Showing #{@category[:name]} clubs:"
                             -@clubs.each do |club|
                                 .club-box
-                                    .center
-                                        .img{:style => "background-image: url(/upload/#{club.img})"}
-                                        %h1
-                                            =club.name
-                                        %p
-                                            =club.description
-                                        -if clubincludesuser?(club)
-                                            %a.btn
-                                                JOINED
-                                            %p.subtitle
-                                                %a{:href => "/dashboard/club/#{club.name}"}
-                                                    View 
-                                                the club
-                                        -else
-                                            %a.btn.btn-empty{:href => "/join/#{club.name}"}
-                                                JOIN
-                                            %p.subtitle
-                                                or
-                                                %a{:href => "/dashboard/club/#{club.name}"}
-                                                    view
-                                                the club
+                                .center
+                                    .img{:style => "background-image: url(/upload/#{club.img})"}
+                                    %h1
+                                        =club.name
+                                    %p
+                                        =club.description
+                                    -if clubincludesuser?(club)
+                                        %a.btn
+                                            JOINED
+                                        %p.subtitle
+                                            %a{:href => "/dashboard/club/#{club.name}"}
+                                                View
+                                            the club
+                                    -else
+                                        %form{:method => "post", :action => "/join"}
+                                            %input{:type => "text", :name => "club", :value => club.name, :hidden => ""}
+                                            %input.btn.btn-empty{:type => "submit", :value => "JOIN"}
+                                        %p.subtitle
+                                            Or
+                                            %a{:href => "/dashboard/club/#{club.name}"}
+                                                view
+                                            the club
                     %footer
                         .left
                             %p

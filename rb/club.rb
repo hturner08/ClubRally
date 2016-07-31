@@ -88,7 +88,7 @@ post "/createclub" do
             nomeeting = false
         end
         if params[:img].blank?
-            Club.create(:name => params[:name], :description => params[:description], :img => "/default/default.png", :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting)
+            Club.create(:name => params[:name], :description => params[:description], :img => "/default/default.png", :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting, :website => params[:website])
         else
             @filename = params[:img][:filename]
             file = params[:img][:tempfile]
@@ -97,7 +97,7 @@ post "/createclub" do
                 f.write(file.read)
             end
     
-            Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting)
+            Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting, :website => params[:website])
         end
 
         clubname = params[:name]
@@ -189,6 +189,7 @@ post "/editclub" do
         club.location = params[:location]
         club.tag = params[:tags]
         club.nomeeting = nomeeting
+        club.website = params[:website]
         club.save
 
         user = User.find_by(:email => session[:username])
@@ -232,68 +233,47 @@ get "/dashboard/club/:club" do
     end
 end
 
-get "/join/:club" do
-    $path = "/join/#{params[:club]}"
-    protected!
-    if Club.all.exists?(:name => params[:club])
-        club = Club.find_by(name: params[:club])
-        if approved?(club) and !club.members.include?(session[:username])
-            club.members << session[:username]
-            club.save
-            club.head.each do |email|
-                head = User.find_by(email: email)
-                send_notification(head, "user", "New Member", "#{session[:username]} joined #{club.name}", Time.new.to_i)
-            end
-            club.board.each do |email|
-                board = User.find_by(email: email)
-                send_notification(board, "user", "New Member", "#{session[:username]} joined #{club.name}", Time.new.to_i)
-            end
+post "/join" do
+    club = Club.find_by(name: params[:club])
 
-            user = User.find_by(email: session[:username])
-            user.clubs << params[:club]
-            user.save
-
-            redirect "/dashboard/home"
-        else
-            redirect "/404"
-        end
-    else
-        redirect "/404"
+    club.members << session[:username]
+    club.save
+    club.head.each do |email|
+        head = User.find_by(email: email)
+        send_notification(head, "user", "New Member", "#{session[:username]} joined #{club.name}", Time.new.to_i)
     end
+    club.board.each do |email|
+        board = User.find_by(email: email)
+        send_notification(board, "user", "New Member", "#{session[:username]} joined #{club.name}", Time.new.to_i)
+    end
+
+    user = User.find_by(email: session[:username])
+    user.clubs << params[:club]
+    user.save
+
+    redirect "/dashboard/home"
 end
 
-get "/leave/:club" do
-    $path = "/leave/#{params[:club]}"
-    protected!
-    if Club.all.exists?(:name => params[:club])
-        club = Club.find_by(name: params[:club])
-        if approved?(club) and (club.members.include?(session[:username]) or club.board.include?(session[:username]))
-            if club.members.include?(session[:username])
-                club.members.delete(session[:username])
-            else
-                club.board.delete(session[:username])
-            end
-            club.save
-            club.head.each do |email|
-                head = User.find_by(email: email)
-                send_notification(head, "sign-out", "Member left", "#{session[:username]} left #{club.name}", Time.new.to_i)
-            end
-            club.board.each do |email|
-                board = User.find_by(email: email)
-                send_notification(board, "sign-out", "Member left", "#{session[:username]} left #{club.name}", Time.new.to_i)
-            end
+post "/leave" do
+    club = Club.find_by(name: params[:club])
+    club.members.delete(session[:username])
+    club.board.delete(session[:username])
+    club.save
 
-            user = User.find_by(email: session[:username])
-            user.clubs.delete(params[:club])
-            user.save
-
-            redirect "/dashboard/home"
-        else
-            redirect "/404"
-        end
-    else
-        redirect "/404"
+    club.head.each do |email|
+        head = User.find_by(email: email)
+        send_notification(head, "sign-out", "Member left", "#{session[:username]} left #{club.name}", Time.new.to_i)
     end
+    club.board.each do |email|
+        board = User.find_by(email: email)
+        send_notification(board, "sign-out", "Member left", "#{session[:username]} left #{club.name}", Time.new.to_i)
+    end
+
+    user = User.find_by(email: session[:username])
+    user.clubs.delete(params[:club])
+    user.save
+
+    redirect "/dashboard/home"
 end
 
 get "/delete/:club" do

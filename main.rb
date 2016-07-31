@@ -124,6 +124,7 @@ def dbinit
             t.string :tag
             t.boolean :approved
             t.boolean :nomeeting
+            t.string :website
         end
         create_table :admins do |t|
             t.string :email

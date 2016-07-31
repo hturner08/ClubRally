@@ -72,20 +72,28 @@
                                 ="'#{params[:search]}':"
                         -@clubs.each do |club|
                             .club-box
-                                -if club.members.include? session[:username] or club.head.include? session[:username]
-                                    %a.full{:href => "/dashboard/club/#{club.name}"}
                                 .center
                                     .img{:style => "background-image: url(/upload/#{club.img})"}
                                     %h1
                                         =club.name
                                     %p
                                         =club.description
-                                    -if club.members.include? session[:username] or club.head.include? session[:username]
-                                        %a.btn{:href => "/dashboard/club/#{club.name}"}
-                                            VIEW
+                                    -if clubincludesuser?(club)
+                                        %a.btn
+                                            JOINED
+                                        %p.subtitle
+                                            %a{:href => "/dashboard/club/#{club.name}"}
+                                                View
+                                            the club
                                     -else
-                                        %a.btn{:href => "/join/#{club.name}"}
-                                            JOIN
+                                        %form{:method => "post", :action => "/join"}
+                                            %input{:type => "text", :name => "club", :value => club.name, :hidden => ""}
+                                            %input.btn.btn-empty{:type => "submit", :value => "JOIN"}
+                                        %p.subtitle
+                                            Or
+                                            %a{:href => "/dashboard/club/#{club.name}"}
+                                                view
+                                            the club
                     %footer
                         .left
                             %p

@@ -91,10 +91,11 @@
                                                 View 
                                             the club
                                     -else
-                                        %a.btn.btn-empty{:href => "/join/#{club.name}"}
-                                            JOIN
+                                        %form{:method => "post", :action => "/join"}
+                                            %input{:type => "text", :name => "club", :value => club.name, :hidden => ""}
+                                            %input.btn.btn-empty{:type => "submit", :value => "JOIN"}
                                         %p.subtitle
-                                            or
+                                            Or
                                             %a{:href => "/dashboard/club/#{club.name}"}
                                                 view
                                             the club

@@ -73,7 +73,7 @@
                                     club guidelines
                             %hr
                             %p
-                                About:
+                                * About:
                             %input.text{:type => "text", :name => "name", :placeholder => "Club name"}
                             %br
                             %input.text{:type => "text", :name => "description", :placeholder => "Short description"}
@@ -89,10 +89,13 @@
                             %p
                                 Upload a club photo:
                             %input{:type => "file", :name => "img", :accept => "image/gif, image/jpeg, image/png, image/jpg"}
-                            /%input.text{:type => "text", :name => "img", :placeholder => "Club Image Url"}
                             %br
                             %p
-                                Meetings:
+                                Website:
+                            %input.text{:type => "text", :name => "website", :placeholder => "URL"}
+                            %br
+                            %p
+                                * Meetings:
                             %select.text-medium{:name => "weekday"}
                                 %option{:value => "Sunday"}
                                     Sunday

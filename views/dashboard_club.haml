@@ -195,6 +195,10 @@
                                     =@club.name
                                 %p
                                     ="#{@club.description} • #{@club.tag}"
+                                    -if @club.website.length > 0
+                                        =" • "
+                                        %a{:href => "http://#{@club.website}", :target => "_blank"}
+                                            =@club.website
                             .buttons
                                 - if @club.head.include?(session[:username]) or @club.board.include?(session[:username])
                                     %a.btn-long{:onclick => "openpopup('mail')"}
@@ -206,13 +210,17 @@
                                     %a.btn{:onclick => "openpopup('confirm')"}
                                         %i.fa.fa-fw.fa-trash
                                 - if @club.members.include?(session[:username]) or @club.board.include?(session[:username])
+                                    %form#leave{:method => "post", :action => "/leave"}
+                                        %input{:type => "text", :name => "club", :value => @club.name, :hidden => ""}
+                                        %input.btn-long{:type => "submit", :value => "LEAVE CLUB"}
                                     %a.btn-long{:href => "/leave/#{@club.name}"}
                                         LEAVE CLUB
                                     %a.btn{:href => "/edit/#{@club.name}"}
                                         %i.fa.fa-fw.fa-pencil
                                 - if !clubincludesuser?(@club)
-                                    %a.btn-long{:href => "/join/#{@club.name}"}
-                                        JOIN CLUB
+                                    %form{:method => "post", :action => "/join"}
+                                        %input{:type => "text", :name => "club", :value => @club.name, :hidden => ""}
+                                        %input.btn-long{:type => "submit", :value => "JOIN CLUB"}
                         %h1
                             Meetings:
                         %p

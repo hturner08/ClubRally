@@ -122,9 +122,9 @@ def dbinit
             t.string :meetingtime
             t.string :location
             t.string :tag
+            t.string :website
             t.boolean :approved
             t.boolean :nomeeting
-            t.string :website
         end
         create_table :admins do |t|
             t.string :email

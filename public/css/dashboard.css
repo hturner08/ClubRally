@@ -361,6 +361,13 @@ span.fa-search {
     position: absolute;
     top: calc(0.3em + 5px);
     right: 0; }
+  #overhead a {
+    color: #52b3d9;
+    transition: 0.2s;
+    cursor: pointer;
+    -webkit-transition: 0.2s; }
+    #overhead a:hover {
+      color: #4a98b7; }
   #overhead .btn {
     color: #464646;
     font-family: montserrat;
@@ -370,6 +377,8 @@ span.fa-search {
     padding: 5px;
     margin-left: 6px;
     cursor: pointer; }
+    #overhead .btn:hover {
+      color: #6c6c6c; }
   #overhead .btn-long {
     border-radius: 1em;
     color: #464646;
@@ -379,17 +388,12 @@ span.fa-search {
     margin: 0 0 0 6px;
     border: 2px solid #6c6c6c;
     cursor: pointer; }
+    #overhead .btn-long:hover {
+      color: #6c6c6c; }
   #overhead #leave {
     margin: 0;
     padding: 0;
     display: inline-block; }
-  #overhead a {
-    color: #52b3d9;
-    transition: 0.2s;
-    cursor: pointer;
-    -webkit-transition: 0.2s; }
-    #overhead a:hover {
-      color: #4a98b7; }
 
 .category {
   width: 11em;

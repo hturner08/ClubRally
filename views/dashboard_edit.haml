@@ -81,7 +81,7 @@
                                     Other
                             %p
                                 Website:
-                            %input.text{:type => "text", :name => "website", :placeholder => "URL"}
+                            %input.text{:type => "text", :name => "website", :value => @club.website}
                             %p
                                 * Meetings:
                             %select.text-medium#day{:name => "weekday", "data-day" => @club.meetingtime.split(',')[0]}

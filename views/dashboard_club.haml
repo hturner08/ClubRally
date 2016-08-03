@@ -213,8 +213,7 @@
                                     %form#leave{:method => "post", :action => "/leave"}
                                         %input{:type => "text", :name => "club", :value => @club.name, :hidden => ""}
                                         %input.btn-long{:type => "submit", :value => "LEAVE CLUB"}
-                                    %a.btn-long{:href => "/leave/#{@club.name}"}
-                                        LEAVE CLUB
+                                -if @club.board.include?(session[:username])
                                     %a.btn{:href => "/edit/#{@club.name}"}
                                         %i.fa.fa-fw.fa-pencil
                                 - if !clubincludesuser?(@club)
@@ -230,7 +229,7 @@
                                     Not meeting this week
                         %br
                         %h1
-                            Head:
+                            Heads:
                         %p
                             -@club.head.each do |head|
                                 %a{:href => "mailto:#{head}"}

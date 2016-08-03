@@ -156,6 +156,7 @@ post "/updateheads" do
             if !params[:coheads].include?(member)
                 send_notification(User.find_by(:email => member), "frown", "Co-heads updated", "You are no longer a co-head for #{club.name}", timestamp)
             end
+            club.members << member
         end
         club.head.clear
         params[:coheads].each do |member|

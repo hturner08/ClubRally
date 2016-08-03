@@ -394,6 +394,8 @@ span.fa-search {
     margin: 0;
     padding: 0;
     display: inline-block; }
+    #overhead #leave input {
+      background-color: #F2F2F0; }
 
 .category {
   width: 11em;

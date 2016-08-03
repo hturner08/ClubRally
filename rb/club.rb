@@ -66,7 +66,7 @@ get "/dashboard/createclub" do
 end
 
 post "/createclub" do
-
+    
     if params[:name].length > 45
         flash[:error] = "Name of your club is too long"
         redirect "/dashboard/createclub"
@@ -81,25 +81,34 @@ post "/createclub" do
         redirect "/dashboard/createclub"
     elsif Club.all.exists?(:name => params[:name])
         flash[:error] = "A club with that name already exists"
-        redirect "/dashboard/createclub"
+        redirect "/dashboard/createclub"        
     else
         nomeeting = true
+        website = ""
+        
         if params[:nomeeting].nil?
             nomeeting = false
         end
-        if params[:img].blank?
-            Club.create(:name => params[:name], :description => params[:description], :img => "/default/default.png", :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting, :website => params[:website])
-        else
+        
+        if !params[:website].nil?
+            website = params[:website]
+        end
+        
+        img = "/default/default.png"
+        
+        if !params[:img].blank?
             @filename = params[:img][:filename]
             file = params[:img][:tempfile]
 
             File.open("./public/upload/#{@filename}", 'wb') do |f|
                 f.write(file.read)
             end
-    
-            Club.create(:name => params[:name], :description => params[:description], :img => @filename, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting, :website => params[:website])
+            
+            img = @filename
         end
 
+        Club.create(:name => params[:name], :description => params[:description], :img => img, :head => [session[:username]], :board => [], :members => [], :meetingtime => "#{params[:weekday]}, #{params[:time]}", :location => params[:location], :tag => params[:tags], :approved => false, :nomeeting => nomeeting, :website => website)
+        
         clubname = params[:name]
         if params[:name].include?(' ')
             clubname = params[:name].gsub!(' ','%20')

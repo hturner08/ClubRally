@@ -193,12 +193,18 @@ post "/editclub" do
                 user.save
             end
         end
+        
+        if params[:website].nil?
+            club.website = ""
+        else
+            club.website = params[:website]
+        end
+        
         club.description = params[:description]
         club.meetingtime = "#{params[:weekday]}, #{params[:time]}"
         club.location = params[:location]
         club.tag = params[:tags]
-        club.nomeeting = nomeeting
-        club.website = params[:website]
+        club.nomeeting = nomeeting 
         club.save
 
         user = User.find_by(:email => session[:username])
@@ -351,6 +357,7 @@ get "/dapprove/:club" do
                 head = User.find_by(email: email)
                 send_notification(head, "thumbs-down", "Denied request", "Unfortunately, your request to create #{club.name} has been denied", Time.new.to_i)
                 send_mail(email, "Denied request", "Unfortunately, your request to create #{club.name} has been denied")
+                head.clubs.delete(params[:club])
             end
 
             redirect "/dashboard/home"

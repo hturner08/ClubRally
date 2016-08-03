@@ -133,7 +133,7 @@ def dbinit
         #Admin.create(:email => "jshen1@andover.edu")
         #Admin.create(:email => "ali2@andover.edu")
         #Admin.create(:email => "scdavis@andover.edu")
-        #Admin.create(:email => "hturner@andover.edu")
+        Admin.create(:email => "hturner@andover.edu")
         #Admin.create(:email => "awang1@andover.edu")
     end
 end
